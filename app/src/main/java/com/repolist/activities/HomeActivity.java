@@ -1,10 +1,13 @@
 package com.repolist.activities;
 
-import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,6 +18,8 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
     ListView mRepoList;
+    EditText mSearchField;
+    Button mSubmitButton;
     RepoListAdapter repoListAdapter;
 
     // lifecycle methods
@@ -45,6 +50,15 @@ public class HomeActivity extends AppCompatActivity {
 
     private void initialize(){
         mRepoList = findViewById(R.id.repo_list);
+        mSearchField = findViewById(R.id.repo_text_field);
+        mSubmitButton = findViewById(R.id.submit_button);
+
+        // toolbar
+        Toolbar myToolbar = findViewById(R.id.repo_list_toolbar);
+        setSupportActionBar(myToolbar);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
     }
 
     private void event_listener(){
@@ -53,6 +67,16 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3){
                 Toast.makeText(HomeActivity.this, "Clicked on position " + position, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(HomeActivity.this, RepoDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String githubUserName = mSearchField.getText().toString();
+                Toast.makeText(HomeActivity.this, "User wants the repos of  " + githubUserName, Toast.LENGTH_LONG).show();
             }
         });
     }

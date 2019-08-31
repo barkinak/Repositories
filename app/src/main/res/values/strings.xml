@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">RepoList</string>
+    <string name="home">Home</string>
+    <string name="search_field_hint">Enter repo name</string>
+    <string name="submit_button">Submit</string>
 </resources>

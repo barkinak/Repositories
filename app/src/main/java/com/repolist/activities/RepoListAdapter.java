@@ -38,7 +38,7 @@ public class RepoListAdapter extends BaseAdapter {
             viewHolder.repoName = v.findViewById(R.id.repo_name);
             v.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder) v.getTag(); // Search about this!
+            viewHolder = (ViewHolder) v.getTag();
         }
 
         viewHolder.repoName.setText(repos.get(position).getRepoName());
