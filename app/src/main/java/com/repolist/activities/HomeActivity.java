@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -13,10 +14,18 @@ import android.widget.Toast;
 
 import com.repolist.R;
 import com.repolist.model.Repo;
+import com.repolist.network.GetReposTask;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class HomeActivity extends AppCompatActivity {
+    private static final String TAG = "HomeActivity";
+
     ListView mRepoList;
     EditText mSearchField;
     Button mSubmitButton;
@@ -29,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         initialize();
         event_listener();
-        test();
+        //test();
     }
     @Override
     public void onResume() {
@@ -77,8 +86,55 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String githubUserName = mSearchField.getText().toString();
                 Toast.makeText(HomeActivity.this, "User wants the repos of  " + githubUserName, Toast.LENGTH_LONG).show();
+
+                GetReposTask task = new GetReposTask();
+                task.setGithubUserID(githubUserName);
+                task.execute();
+
+                try {
+                    Log.d(TAG, "RESPONSE: " + task.get());
+                    repoListAdapter = new RepoListAdapter(getApplicationContext(), parseJSON(task.get()));
+                    mRepoList.setAdapter(repoListAdapter);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
+    }
+
+    // Parsing JSON Object returned from server:
+    public ArrayList<Repo> parseJSON(String output){
+        ArrayList<Repo> testRepos = new ArrayList<>();
+        try {
+            JSONObject jObject;
+            JSONArray jsonArray = new JSONArray(output);
+            String data, time, date;
+            for(int i=0; i<jsonArray.length(); i++){
+                jObject = jsonArray.getJSONObject(i);
+                String id = jObject.getString("id");
+                String name = jObject.getString("name");
+                testRepos.add(new Repo(name, id));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return testRepos;
+    }
+
+    // Determines whether input string is JSON:
+    public boolean isJSONValid(String test) {
+        try {
+            new JSONObject(test);
+        } catch (JSONException e1) {
+            try {
+                new JSONArray(test);
+            } catch (JSONException e2) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void test(){
