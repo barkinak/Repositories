@@ -3,22 +3,44 @@ package com.repolist.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.repolist.R;
+import com.repolist.database.DatabaseHelper;
 import com.squareup.picasso.Picasso;
 
 public class RepoDetailActivity extends AppCompatActivity {
+    private static final String TAG = "RepoDetailActivity";
+
+    DatabaseHelper mDbHelper;
     TextView mOwner, mOpenIssues, mStars;
+    Button mFavoriteButton;
     ImageView mAvatar;
+    int ownerID;
+    int repoID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repo_detail);
         initialize();
+        event_listeners();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mDbHelper.checkFavorite(Integer.toString(repoID))){
+            mDbHelper.deleteRepo(Integer.toString(repoID));
+            mFavoriteButton.setBackgroundResource(R.drawable.baseline_star_border_24);
+        } else {
+            mDbHelper.addRepo(ownerID, repoID);
+            mFavoriteButton.setBackgroundResource(R.drawable.baseline_star_24);
+        }
     }
 
     @Override
@@ -35,6 +57,7 @@ public class RepoDetailActivity extends AppCompatActivity {
         mOpenIssues= findViewById(R.id.open_issues);
         mStars = findViewById(R.id.stars);
         mAvatar = findViewById(R.id.avatar);
+        mFavoriteButton = findViewById(R.id.favorite_button);
 
         // toolbar
         Toolbar myToolbar = findViewById(R.id.repo_detail_toolbar);
@@ -54,12 +77,31 @@ public class RepoDetailActivity extends AppCompatActivity {
         String avatar_url = extras.getString("avatar_url");
         int stars = extras.getInt("stars");
         int open_issues = extras.getInt("open_issues");
+        ownerID = extras.getInt("owner_id");
+        repoID = extras.getInt("repo_id");
 
         // setting variables
         mOwner.setText("Owner: " + owner_login);
         mOpenIssues.setText("Open Issues: " + Integer.toString(open_issues));
-        mStars.setText("Stars: " + Integer.toString(open_issues));
+        mStars.setText("Stars: " + Integer.toString(stars));
         getSupportActionBar().setTitle(repo_name);
         Picasso.with(getApplicationContext()).load(avatar_url).into(mAvatar);
+
+        mDbHelper = DatabaseHelper.getInstance(getApplicationContext());
+    }
+
+    private void event_listeners() {
+        mFavoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mDbHelper.checkFavorite(Integer.toString(repoID))){
+                    mDbHelper.deleteRepo(Integer.toString(repoID));
+                    mFavoriteButton.setBackgroundResource(R.drawable.baseline_star_border_24);
+                } else {
+                    mDbHelper.addRepo(ownerID, repoID);
+                    mFavoriteButton.setBackgroundResource(R.drawable.baseline_star_24);
+                }
+            }
+        });
     }
 }

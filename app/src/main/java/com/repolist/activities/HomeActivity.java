@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.repolist.R;
+import com.repolist.database.DatabaseHelper;
 import com.repolist.model.Repo;
 import com.repolist.network.GetReposTask;
 
@@ -31,6 +33,9 @@ public class HomeActivity extends AppCompatActivity {
     RepoListAdapter repoListAdapter;
 
     ArrayList<Repo> repoList;
+    ArrayList<String> favList;
+    DatabaseHelper mDbHelper;
+    String mOwnerID;
 
     // lifecycle methods
     @Override
@@ -38,11 +43,16 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initialize();
-        event_listener();
+        event_listeners();
     }
     @Override
     public void onResume() {
         super.onResume();
+        if(mOwnerID != null) {
+            favList = mDbHelper.getRepos(mOwnerID);
+            repoListAdapter.notifyDataSetChanged();
+            printArray(favList);
+        }
     }
     @Override
     protected void onPause() {
@@ -55,6 +65,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mDbHelper.closeDB();
     }
 
     private void initialize(){
@@ -69,9 +80,11 @@ public class HomeActivity extends AppCompatActivity {
         if(getSupportActionBar() != null){
             getSupportActionBar().setHomeButtonEnabled(true);
         }*/
+
+        mDbHelper = DatabaseHelper.getInstance(getApplicationContext());
     }
 
-    private void event_listener(){
+    private void event_listeners(){
         // item click listener for repo list
         mRepoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -82,6 +95,8 @@ public class HomeActivity extends AppCompatActivity {
                 i.putExtra("avatar_url", repoList.get(position).getAvatar_url());
                 i.putExtra("stars", repoList.get(position).getStargazers_count());
                 i.putExtra("open_issues", repoList.get(position).getOpen_issues_count());
+                i.putExtra("owner_id", repoList.get(position).getOwner_id());
+                i.putExtra("repo_id", repoList.get(position).getRepoID());
                 startActivity(i);
             }
         });
@@ -98,9 +113,13 @@ public class HomeActivity extends AppCompatActivity {
                 task.execute();
 
                 try {
-                    repoList = parseJSON(task.get());
-                    repoListAdapter = new RepoListAdapter(getApplicationContext(), repoList);
-                    mRepoList.setAdapter(repoListAdapter);
+                    String result = task.get();
+                    Log.d(TAG, "result " + result);
+                    if(isJSONValid(result)) {
+                        repoList = parseJSON(task.get());
+                        repoListAdapter = new RepoListAdapter(getApplicationContext(), repoList, favList);
+                        mRepoList.setAdapter(repoListAdapter);
+                    }
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -118,13 +137,15 @@ public class HomeActivity extends AppCompatActivity {
             JSONArray jsonArray = new JSONArray(output);
             for(int i=0; i<jsonArray.length(); i++){
                 jObject = jsonArray.getJSONObject(i);
-                String id = jObject.getString("id");
-                String name = jObject.getString("name");
-                String avatar_url = jObject.getJSONObject("owner").getString("avatar_url");
-                String owner_login = jObject.getJSONObject("owner").getString("login");
+                int id                = jObject.getInt("id");
+                String name           = jObject.getString("name");
+                String avatar_url     = jObject.getJSONObject("owner").getString("avatar_url");
+                String owner_login    = jObject.getJSONObject("owner").getString("login");
+                int owner_id          = jObject.getJSONObject("owner").getInt("id");
                 int open_issues_count = jObject.getInt("open_issues_count");
-                int stargazers_count = jObject.getInt("stargazers_count");
-                testRepos.add(new Repo(name, id, avatar_url, owner_login, open_issues_count, stargazers_count));
+                int stargazers_count  = jObject.getInt("stargazers_count");
+                testRepos.add(new Repo(name, id, avatar_url, owner_login, open_issues_count, stargazers_count, owner_id));
+                mOwnerID = Integer.toString(owner_id);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -144,5 +165,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    private void printArray(ArrayList<String> list){
+        Log.d(TAG, "Printing...");
+        for(int i=0; i<list.size(); i++){
+            Log.d(TAG, "i: " + i + "   " + list.get(i));
+        }
     }
 }

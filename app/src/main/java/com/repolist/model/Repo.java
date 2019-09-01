@@ -2,21 +2,24 @@ package com.repolist.model;
 
 public class Repo {
     String repoName;
-    String repoID;
+    int repoID;
     String avatar_url;
     String owner_login;
     int open_issues_count;
     int stargazers_count;
+    int owner_id;
 
     public Repo(){ }
 
-    public Repo(String repoName, String repoID, String avatar_url, String owner_login, int open_issues_count, int stargazers_count) {
+    public Repo(String repoName, int repoID, String avatar_url, String owner_login,
+                int open_issues_count, int stargazers_count, int owner_id) {
         this.repoName = repoName;
         this.repoID = repoID;
         this.avatar_url = avatar_url;
         this.owner_login = owner_login;
         this.open_issues_count = open_issues_count;
         this.stargazers_count = stargazers_count;
+        this.owner_id = owner_id;
     }
 
     public String getRepoName() {
@@ -27,11 +30,11 @@ public class Repo {
         this.repoName = repoName;
     }
 
-    public String getRepoID() {
+    public int getRepoID() {
         return repoID;
     }
 
-    public void setRepoID(String repoID) {
+    public void setRepoID(int repoID) {
         this.repoID = repoID;
     }
 
@@ -65,5 +68,13 @@ public class Repo {
 
     public void setStargazers_count(int stargazers_count) {
         this.stargazers_count = stargazers_count;
+    }
+
+    public int getOwner_id() {
+        return owner_id;
+    }
+
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
     }
 }
