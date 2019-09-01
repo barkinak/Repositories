@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -31,6 +30,8 @@ public class HomeActivity extends AppCompatActivity {
     Button mSubmitButton;
     RepoListAdapter repoListAdapter;
 
+    ArrayList<Repo> repoList;
+
     // lifecycle methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         initialize();
         event_listener();
-        //test();
     }
     @Override
     public void onResume() {
@@ -65,9 +65,10 @@ public class HomeActivity extends AppCompatActivity {
         // toolbar
         Toolbar myToolbar = findViewById(R.id.repo_list_toolbar);
         setSupportActionBar(myToolbar);
+        /*
         if(getSupportActionBar() != null){
             getSupportActionBar().setHomeButtonEnabled(true);
-        }
+        }*/
     }
 
     private void event_listener(){
@@ -75,25 +76,30 @@ public class HomeActivity extends AppCompatActivity {
         mRepoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3){
-                Toast.makeText(HomeActivity.this, "Clicked on position " + position, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(HomeActivity.this, RepoDetailActivity.class);
-                startActivity(intent);
+                Intent i = new Intent(HomeActivity.this, RepoDetailActivity.class);
+                i.putExtra("repo_name", repoList.get(position).getRepoName());
+                i.putExtra("owner_login", repoList.get(position).getOwner_login());
+                i.putExtra("avatar_url", repoList.get(position).getAvatar_url());
+                i.putExtra("stars", repoList.get(position).getStargazers_count());
+                i.putExtra("open_issues", repoList.get(position).getOpen_issues_count());
+                startActivity(i);
             }
         });
 
+        // gets repos from Github when clicked
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String githubUserName = mSearchField.getText().toString();
-                Toast.makeText(HomeActivity.this, "User wants the repos of  " + githubUserName, Toast.LENGTH_LONG).show();
+                Toast.makeText(HomeActivity.this, "Getting repos of  " + githubUserName, Toast.LENGTH_LONG).show();
 
                 GetReposTask task = new GetReposTask();
                 task.setGithubUserID(githubUserName);
                 task.execute();
 
                 try {
-                    Log.d(TAG, "RESPONSE: " + task.get());
-                    repoListAdapter = new RepoListAdapter(getApplicationContext(), parseJSON(task.get()));
+                    repoList = parseJSON(task.get());
+                    repoListAdapter = new RepoListAdapter(getApplicationContext(), repoList);
                     mRepoList.setAdapter(repoListAdapter);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
@@ -104,18 +110,21 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    // Parsing JSON Object returned from server:
+    // parsing JSON Object returned from server:
     public ArrayList<Repo> parseJSON(String output){
         ArrayList<Repo> testRepos = new ArrayList<>();
         try {
             JSONObject jObject;
             JSONArray jsonArray = new JSONArray(output);
-            String data, time, date;
             for(int i=0; i<jsonArray.length(); i++){
                 jObject = jsonArray.getJSONObject(i);
                 String id = jObject.getString("id");
                 String name = jObject.getString("name");
-                testRepos.add(new Repo(name, id));
+                String avatar_url = jObject.getJSONObject("owner").getString("avatar_url");
+                String owner_login = jObject.getJSONObject("owner").getString("login");
+                int open_issues_count = jObject.getInt("open_issues_count");
+                int stargazers_count = jObject.getInt("stargazers_count");
+                testRepos.add(new Repo(name, id, avatar_url, owner_login, open_issues_count, stargazers_count));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -123,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {
         return testRepos;
     }
 
-    // Determines whether input string is JSON:
+    // determines whether input string is JSON:
     public boolean isJSONValid(String test) {
         try {
             new JSONObject(test);
@@ -135,14 +144,5 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
         return true;
-    }
-
-    private void test(){
-        ArrayList<Repo> testRepos = new ArrayList<>();
-        testRepos.add(new Repo("Repo 1" , "1000"));
-        testRepos.add(new Repo("Repo 2" , "1001"));
-        testRepos.add(new Repo("Repo 3" , "1002"));
-        repoListAdapter = new RepoListAdapter(getApplicationContext(), testRepos);
-        mRepoList.setAdapter(repoListAdapter);
     }
 }
