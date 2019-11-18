@@ -1,2 +1,3 @@
 # RepoList Android Application
-A Github repo listing application where users can query Github to get the repos of a certain user, view details of those repos and add them to their favorite list.
+
+In this application a Github Repository search engine is created with the MVVM architecture using ViewModel class which is part of Android Jetpack. It consists of 2 screens where the first one contains the list of repositories of the queried user. The second screen opens when the user clicks on a repository with detailed information on that repository.
