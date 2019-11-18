@@ -1,4 +1,4 @@
-package com.repolist.activities;
+package com.repolist.view.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,18 +13,18 @@ import com.repolist.R;
 import com.repolist.model.Repo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RepoListAdapter extends BaseAdapter {
     private static final String TAG = "RepoListAdapter";
 
     private Context context;
-    private ArrayList<Repo> repos;
-    private ArrayList<String> favList;
+    private List<Repo> repos;
 
-    public RepoListAdapter(Context context, ArrayList<Repo> repos, ArrayList<String> favList){
+    public RepoListAdapter(Context context, List<Repo> repos){
         this.context = context;
         this.repos = repos;
-        this.favList = favList;
+        //this.favList = favList;
     }
 
     public int getCount(){ return repos.size(); }
@@ -46,21 +46,8 @@ public class RepoListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) v.getTag();
         }
 
-        if(favList != null) {
-            printArray(favList);
-            if (favList.contains(repos.get(position))) {
-                viewHolder.starImage.setImageResource(R.drawable.baseline_star_24);
-            }
-        }
         viewHolder.repoName.setText(repos.get(position).getRepoName());
         return v;
-    }
-
-    private void printArray(ArrayList<String> list){
-        Log.d(TAG, "Printing FavList");
-        for(String s: list)
-            Log.d(TAG, s + " ");
-        Log.d(TAG, "");
     }
 
     public class ViewHolder{

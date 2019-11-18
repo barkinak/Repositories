@@ -1,4 +1,4 @@
-package com.repolist.database;
+package com.repolist.repositories;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -50,11 +50,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // creating required tables
+        Log.d(TAG, "*** Inside onCreate");
         db.execSQL(CREATE_TABLE_FAVS);
+        Log.d(TAG, "*** table favs created");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.d(TAG, "*** Inside onUpgrade");
         // on upgrade drop older tables
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVS);
 
@@ -63,6 +66,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void addRepo(int owner_id, int repo_id) {
+        Log.d(TAG, "*** Inside addRepo");
+        Log.d(TAG, "*** owner_id " + owner_id);
+        Log.d(TAG, "*** repo_id " + repo_id);
+
         // Create and/or open the database for writing:
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();

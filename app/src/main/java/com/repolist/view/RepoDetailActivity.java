@@ -1,9 +1,8 @@
-package com.repolist.activities;
+package com.repolist.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.repolist.R;
-import com.repolist.database.DatabaseHelper;
+import com.repolist.repositories.DatabaseHelper;
 import com.squareup.picasso.Picasso;
 
 public class RepoDetailActivity extends AppCompatActivity {
@@ -34,13 +33,6 @@ public class RepoDetailActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if(mDbHelper.checkFavorite(Integer.toString(repoID))){
-            mDbHelper.deleteRepo(Integer.toString(repoID));
-            mFavoriteButton.setBackgroundResource(R.drawable.baseline_star_border_24);
-        } else {
-            mDbHelper.addRepo(ownerID, repoID);
-            mFavoriteButton.setBackgroundResource(R.drawable.baseline_star_24);
-        }
     }
 
     @Override
