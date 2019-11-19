@@ -8,13 +8,13 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="repoDetailActivity">
+                  <entry key="repoListFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="296" />
-                            <option name="y" value="40" />
+                            <option name="x" value="41" />
+                            <option name="y" value="152" />
                           </Point>
                         </option>
                       </LayoutPositions>

@@ -1,6 +1,6 @@
 package com.repolist.repositories;
 
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.MutableLiveData;
 import android.util.Log;
 
 import com.repolist.model.Repo;
@@ -31,10 +31,10 @@ public class GithubRepoRepository {
     }
 
     // Get data from a webservice or online source
-    public MutableLiveData<List<Repo>> getRepos(){
+    public MutableLiveData<List<Repo>> getRepos(String username){
         Log.d(TAG, "**** 1");
         GetReposTask task = new GetReposTask();
-        task.setGithubUserID("aea7");
+        task.setGithubUserID(username);
         task.execute();
 
         try {

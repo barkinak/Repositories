@@ -1,8 +1,8 @@
 package com.repolist.viewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import android.util.Log;
 
 import com.repolist.model.Repo;
@@ -24,7 +24,7 @@ public class HomeActivityViewModel extends ViewModel {
         }
         Log.d(TAG, "**** 4");
         mGithubRepoRepository = GithubRepoRepository.getInstance();
-        mRepos = mGithubRepoRepository.getRepos();
+        mRepos = mGithubRepoRepository.getRepos("aea7");
     }
 
     public LiveData<List<Repo>> getRepos(){

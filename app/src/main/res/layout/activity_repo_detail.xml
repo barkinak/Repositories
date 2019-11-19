@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.RepoDetailActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/repo_detail_toolbar"
         android:background="@color/toolbar"
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:layout_height="33dp"
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"/>
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
         android:background="@color/gray"
