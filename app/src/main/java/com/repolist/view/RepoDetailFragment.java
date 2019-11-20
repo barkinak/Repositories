@@ -1,5 +1,7 @@
 package com.repolist.view;
 
-public class RepoDetailFragment {
+import androidx.fragment.app.Fragment;
+
+public class RepoDetailFragment extends Fragment {
 
 }

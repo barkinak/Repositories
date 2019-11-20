@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.repolist.R;
-import com.repolist.model.Repo;
+import com.repolist.model.Repository;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyViewHolder> {
     private static final String TAG = "RepoListAdapter";
-    private List<Repo> repos;
+    private List<Repository> repos;
     private OnRepoListener mOnRepoListener;
 
     // Provide a reference to the views for each data item
@@ -23,14 +23,17 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
-        public TextView textView;
+        public TextView mRepoName, mRepoDescription, mStargazersCount, mWatchersCount;
         OnRepoListener onRepoListener;
 
         public MyViewHolder(View v, OnRepoListener onRepoListener) {
             super(v);
-            textView = v.findViewById(R.id.repo_name);
-            this.onRepoListener = onRepoListener;
+            mRepoName = v.findViewById(R.id.repo_name);
+            mRepoDescription = v.findViewById(R.id.repo_description);
+            mStargazersCount = v.findViewById(R.id.stargazers_count);
+            mWatchersCount = v.findViewById(R.id.watchers_count);
 
+            this.onRepoListener = onRepoListener;
             v.setOnClickListener(this);
         }
 
@@ -49,7 +52,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
         this.mOnRepoListener = mOnRepoListener;
     }
 
-    public void setRepos(List<Repo> repos){ this.repos = repos; }
+    public void setRepos(List<Repository> repos){ this.repos = repos; }
 
     // Create new views
     @Override
@@ -62,7 +65,10 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
     // Replace the contents of a view
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.textView.setText(repos.get(position).getRepoName());
+        holder.mRepoName.setText(repos.get(position).getName());
+        holder.mRepoDescription.setText(repos.get(position).getDescription());
+        holder.mStargazersCount.setText("" + repos.get(position).getStargazersCount());
+        holder.mWatchersCount.setText("" + repos.get(position).getWatchersCount());
     }
 
     // Return the size of your data set

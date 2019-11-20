@@ -3,4 +3,5 @@
     <string name="home">Home</string>
     <string name="search_field_hint">Enter repo name</string>
     <string name="submit_button">Submit</string>
+    <string name="description_of_repository">Description of repository</string>
 </resources>

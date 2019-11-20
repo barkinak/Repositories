@@ -3,7 +3,7 @@ package com.repolist.repositories;
 import androidx.lifecycle.MutableLiveData;
 import android.util.Log;
 
-import com.repolist.model.Repo;
+import com.repolist.model.Repository;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,7 +21,7 @@ public class GithubRepoRepository {
     private static final String TAG = "GithubRepoRepository";
 
     private static GithubRepoRepository instance;
-    private ArrayList<Repo> dataSet = new ArrayList<>();
+    private ArrayList<Repository> dataSet = new ArrayList<>();
 
     public static GithubRepoRepository getInstance(){
         if(instance == null){
@@ -31,7 +31,7 @@ public class GithubRepoRepository {
     }
 
     // Get data from a webservice or online source
-    public MutableLiveData<List<Repo>> getRepos(String username){
+    public MutableLiveData<List<Repository>> getRepos(String username){
         Log.d(TAG, "**** 1");
         GetReposTask task = new GetReposTask();
         task.setGithubUserID(username);
@@ -47,27 +47,24 @@ public class GithubRepoRepository {
             e.printStackTrace();
         }
 
-        MutableLiveData<List<Repo>> data = new MutableLiveData<>();
+        MutableLiveData<List<Repository>> data = new MutableLiveData<>();
         data.setValue(dataSet);
         return data;
     }
 
     // parsing JSON Object returned from server:
-    public ArrayList<Repo> parseJSON(String output){
-        ArrayList<Repo> testRepos = new ArrayList<>();
+    public ArrayList<Repository> parseJSON(String output){
+        ArrayList<Repository> testRepos = new ArrayList<>();
         try {
             JSONObject jObject;
             JSONArray jsonArray = new JSONArray(output);
             for(int i=0; i<jsonArray.length(); i++){
                 jObject = jsonArray.getJSONObject(i);
-                int id                = jObject.getInt("id");
                 String name           = jObject.getString("name");
-                String avatar_url     = jObject.getJSONObject("owner").getString("avatar_url");
-                String owner_login    = jObject.getJSONObject("owner").getString("login");
-                int owner_id          = jObject.getJSONObject("owner").getInt("id");
-                int open_issues_count = jObject.getInt("open_issues_count");
+                String description    = jObject.getString("description");
                 int stargazers_count  = jObject.getInt("stargazers_count");
-                testRepos.add(new Repo(name, id, avatar_url, owner_login, open_issues_count, stargazers_count, owner_id));
+                int watchers_count  = jObject.getInt("watchers_count");
+                testRepos.add(new Repository(name, description, stargazers_count, watchers_count));
             }
         } catch (JSONException e) {
             e.printStackTrace();

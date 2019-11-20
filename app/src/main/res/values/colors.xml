@@ -13,6 +13,12 @@
     <color name="search_field">#505763</color>
     <color name="toolbar">#202528</color>
 
+    <!-- Theme 1 is the color of GitHub bar -->
+    <color name="theme_github_1">#202528</color>
+    <color name="theme_github_2">#e8e9e9</color>
+    <color name="theme_github_3">#a5a7a9</color>
+    <color name="theme_github_4">#626668</color>
+
     <!-- HomePage colors -->
     <color name="p1">#3c4245</color>
     <color name="p2">#5f6769</color>
