@@ -26,7 +26,7 @@ import java.util.List;
  * RepoList will use RecyclerView
  */
 
-public class RepoListFragment extends Fragment {
+public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepoListener {
 
     private static final String TAG = "RepoListFragment";
     private HomeActivityViewModel mViewModel;
@@ -43,7 +43,7 @@ public class RepoListFragment extends Fragment {
 
         mRecyclerView = rootView.findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mRepoListAdapter = new RepoListAdapter();
+        mRepoListAdapter = new RepoListAdapter(this);
 
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mRepoListAdapter);
@@ -67,6 +67,10 @@ public class RepoListFragment extends Fragment {
                 mRepoListAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public void onRepoClick(int position){
+        Log.d(TAG, "clicked on pos " + position);
     }
 
 }
