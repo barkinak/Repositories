@@ -1,5 +1,6 @@
 package com.repolist.view.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
-        public TextView mRepoName, mRepoDescription, mStargazersCount, mWatchersCount;
+        public TextView mRepoName, mRepoDescription, mStargazersCount, mWatchersCount, mLanguage;
         OnRepoListener onRepoListener;
 
         public MyViewHolder(View v, OnRepoListener onRepoListener) {
@@ -32,6 +33,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
             mRepoDescription = v.findViewById(R.id.repo_description);
             mStargazersCount = v.findViewById(R.id.stargazers_count);
             mWatchersCount = v.findViewById(R.id.watchers_count);
+            mLanguage = v.findViewById(R.id.language);
 
             this.onRepoListener = onRepoListener;
             v.setOnClickListener(this);
@@ -66,9 +68,14 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.mRepoName.setText(repos.get(position).getName());
-        holder.mRepoDescription.setText(repos.get(position).getDescription());
         holder.mStargazersCount.setText("" + repos.get(position).getStargazersCount());
         holder.mWatchersCount.setText("" + repos.get(position).getWatchersCount());
+        holder.mLanguage.setText("" + repos.get(position).getLanguage());
+
+        if(repos.get(position).getDescription() == "null")
+            holder.mRepoDescription.setText("No description");
+        else
+            holder.mRepoDescription.setText(repos.get(position).getDescription());
     }
 
     // Return the size of your data set

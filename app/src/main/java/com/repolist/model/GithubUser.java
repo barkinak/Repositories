@@ -23,4 +23,8 @@ public class GithubUser {
     public String received_events_url;
     public String type;
     public Boolean site_admin;
+
+    public GithubUser(String avatar_url){
+        this.avatar_url = avatar_url;
+    }
 }

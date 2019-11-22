@@ -1,12 +1,18 @@
 package com.repolist.model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
 /**
  * Represents a Repository object returned from Github API.
  */
 
+@Entity(tableName = "repositories")
 public class Repository {
+    @PrimaryKey(autoGenerate = true)
     public long id;
     public String node_id;
     public String name;
@@ -79,14 +85,16 @@ public class Repository {
     public int watchers;
     public String default_branch;
 
+    @Ignore
     public Repository() {
     }
 
-    public Repository(String name, String description, int stargazers_count, int watchers_count) {
+    public Repository(String name, String description, int stargazers_count, int watchers_count, String language) {
         this.name = name;
         this.description = description;
         this.stargazers_count = stargazers_count;
         this.watchers_count = watchers_count;
+        this.language = language;
     }
 
     public String getName() {
@@ -103,5 +111,9 @@ public class Repository {
 
     public int getWatchersCount() {
         return watchers_count;
+    }
+
+    public String getLanguage() {
+        return language;
     }
 }

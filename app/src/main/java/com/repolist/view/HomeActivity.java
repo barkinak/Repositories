@@ -1,34 +1,32 @@
 package com.repolist.view;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import android.net.Uri;
 import android.os.Bundle;
 
-import android.widget.Button;
-import android.widget.EditText;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.repolist.R;
-import com.repolist.viewmodel.HomeActivityViewModel;
 
-import java.util.List;
-
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements RepoDetailFragment.OnFragmentInteractionListener {
     private static final String TAG = "HomeActivity";
-
-    private EditText mSearchField;
-    private Button mSubmitButton;
-
-    private HomeActivityViewModel mHomeActivityViewModel;
 
     // lifecycle methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Toolbar myToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+
+        Navigation.findNavController(this, R.id.my_nav_host_fragment).navigate(R.id.repoDetailFragment);
     }
     @Override
     public void onResume() {
@@ -43,5 +41,30 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                Log.d(TAG, "onOptionsItemSelected: Search");
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

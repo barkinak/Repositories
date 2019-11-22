@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.repolist.R;
-import com.repolist.model.Repo;
 import com.repolist.model.Repository;
 import com.repolist.view.adapter.RepoListAdapter;
 import com.repolist.viewmodel.HomeActivityViewModel;

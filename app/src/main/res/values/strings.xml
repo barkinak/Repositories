@@ -4,4 +4,8 @@
     <string name="search_field_hint">Enter repo name</string>
     <string name="submit_button">Submit</string>
     <string name="description_of_repository">Description of repository</string>
+    <string name="search_title">Enter repository name</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

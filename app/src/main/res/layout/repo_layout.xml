@@ -19,7 +19,9 @@
 
         <TextView
             android:id="@+id/repo_name"
-            android:layout_width="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="@color/theme_github_4"
@@ -82,6 +84,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
+                android:textColor="@color/theme_github_4"/>
+
+            <TextView
+                android:id="@+id/language"
+                android:layout_marginStart="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@color/theme_github_4"/>
 
         </LinearLayout>
