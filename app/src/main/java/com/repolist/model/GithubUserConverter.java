@@ -11,6 +11,6 @@ public class GithubUserConverter {
 
     @TypeConverter
     public static String toURL(GithubUser githubUser){
-        return githubUser.avatar_url;
+        return githubUser.getAvatarUrl();
     }
 }

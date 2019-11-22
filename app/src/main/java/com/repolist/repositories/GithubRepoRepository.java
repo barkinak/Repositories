@@ -60,12 +60,13 @@ public class GithubRepoRepository {
             JSONArray jsonArray = new JSONArray(output);
             for(int i=0; i<jsonArray.length(); i++){
                 jObject = jsonArray.getJSONObject(i);
+                int id                 = jObject.getInt("id");
                 String name           = jObject.getString("name");
                 String description    = jObject.getString("description");
                 int stargazers_count  = jObject.getInt("stargazers_count");
                 int watchers_count  = jObject.getInt("watchers_count");
                 String language = jObject.getString("language");
-                testRepos.add(new Repository(name, description, stargazers_count, watchers_count, language));
+                testRepos.add(new Repository(id, name, description, stargazers_count, watchers_count, language));
             }
         } catch (JSONException e) {
             e.printStackTrace();

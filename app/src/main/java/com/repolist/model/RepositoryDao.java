@@ -23,8 +23,10 @@ public interface RepositoryDao {
     @Query("SELECT * FROM repositories WHERE id = :id")
     Repository getRepositoryById(int id);
 
+    /*
     @Query("SELECT * FROM repositories ORDER BY created_at DESC")
     LiveData<List<Repository>> getAll();
+    */
 
     @Query("DELETE FROM repositories")
     int deleteAll();

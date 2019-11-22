@@ -5,10 +5,12 @@ package com.repolist.model;
  */
 
 public class GithubUser {
+    public String avatar_url;
+
+    /*
     public String login;
     public long id;
     public String node_id;
-    public String avatar_url;
     public String gravatar_id;
     public String url;
     public String html_url;
@@ -23,8 +25,13 @@ public class GithubUser {
     public String received_events_url;
     public String type;
     public Boolean site_admin;
+    */
 
     public GithubUser(String avatar_url){
         this.avatar_url = avatar_url;
+    }
+
+    public String getAvatarUrl() {
+        return avatar_url;
     }
 }

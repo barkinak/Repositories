@@ -13,14 +13,19 @@ import java.util.Date;
 @Entity(tableName = "repositories")
 public class Repository {
     @PrimaryKey(autoGenerate = true)
-    public long id;
-    public String node_id;
+    public int id;
     public String name;
+    public String description;
+    public int stargazers_count;
+    public int watchers_count;
+    public String language;
+
+    /*
+    public String node_id;
     public String full_name;
     public Boolean _private;
     public GithubUser owner;
     public String html_url;
-    public String description;
     public Boolean fork;
     public String url;
     public String forks_url;
@@ -68,9 +73,6 @@ public class Repository {
     public String svn_url;
     public String homepage;
     public int size;
-    public int stargazers_count;
-    public int watchers_count;
-    public String language;
     public boolean has_issues;
     public boolean has_projects;
     public boolean has_downloads;
@@ -84,17 +86,31 @@ public class Repository {
     public int open_issues;
     public int watchers;
     public String default_branch;
+    */
 
     @Ignore
-    public Repository() {
+    public Repository() {}
+
+    public Repository(int id, String name, String description, int stargazers_count, int watchers_count, String language) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.stargazers_count = stargazers_count;
+        this.watchers_count = watchers_count;
+        this.language = language;
     }
 
+    @Ignore
     public Repository(String name, String description, int stargazers_count, int watchers_count, String language) {
         this.name = name;
         this.description = description;
         this.stargazers_count = stargazers_count;
         this.watchers_count = watchers_count;
         this.language = language;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -113,7 +129,5 @@ public class Repository {
         return watchers_count;
     }
 
-    public String getLanguage() {
-        return language;
-    }
+    public String getLanguage() { return language; }
 }
