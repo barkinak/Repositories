@@ -1,5 +1,6 @@
 package com.repolist.view;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -10,11 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.repolist.R;
 import com.repolist.model.Repository;
@@ -32,9 +36,9 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     private static final String TAG = "RepoListFragment";
     private HomeActivityViewModel mViewModel;
 
+    @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
     protected RepoListAdapter mRepoListAdapter;
-    protected RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,16 +48,20 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
         View rootView = inflater.inflate(R.layout.repo_list_fragment, container, false);
         rootView.setTag(TAG);
 
-        mRecyclerView = rootView.findViewById(R.id.recyclerView);
-        mLayoutManager = new LinearLayoutManager(getActivity());
         mRepoListAdapter = new RepoListAdapter(this);
 
-        // Set CustomAdapter as the adapter for RecyclerView.
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mRepoListAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ButterKnife.bind(this, rootView);
+        initRecyclerView();
 
         return rootView;
+    }
+
+    private void initRecyclerView() {
+        // Set CustomAdapter as the adapter for RecyclerView.
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(mRepoListAdapter);
     }
 
     @Override
