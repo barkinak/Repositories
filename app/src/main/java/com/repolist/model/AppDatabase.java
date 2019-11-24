@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {Repository.class}, version = 1)
+@Database(entities = {Repository.class}, version = 1, exportSchema = false)
 @TypeConverters({DateConverter.class, GithubUserConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "AppDatabase.db";

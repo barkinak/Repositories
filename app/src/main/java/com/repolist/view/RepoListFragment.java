@@ -48,19 +48,22 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
         View rootView = inflater.inflate(R.layout.repo_list_fragment, container, false);
         rootView.setTag(TAG);
 
-        mRepoListAdapter = new RepoListAdapter(this);
-
         ButterKnife.bind(this, rootView);
         initRecyclerView();
+        initViewModel();
 
         return rootView;
     }
 
+    private void initViewModel() {
+    }
+
     private void initRecyclerView() {
-        // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
+
+        mRepoListAdapter = new RepoListAdapter(this);
         mRecyclerView.setAdapter(mRepoListAdapter);
     }
 

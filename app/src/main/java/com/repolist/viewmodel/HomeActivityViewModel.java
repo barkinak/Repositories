@@ -24,7 +24,7 @@ public class HomeActivityViewModel extends ViewModel {
         }
         Log.d(TAG, "**** 4");
         mGithubRepoRepository = GithubRepoRepository.getInstance();
-        mRepos = mGithubRepoRepository.getRepos("aea7");
+        mRepos = mGithubRepoRepository.getRepos("bitcoin");
     }
 
     public LiveData<List<Repository>> getRepos(){

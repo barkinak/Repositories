@@ -20,7 +20,7 @@ public class Repository {
     public int watchers_count;
     public String language;
 
-    /*
+    /* These fields can be added later as the app progresses
     public String node_id;
     public String full_name;
     public Boolean _private;
