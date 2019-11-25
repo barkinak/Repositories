@@ -1,8 +1,12 @@
 package com.repolist.repositories;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import android.content.Context;
 import android.util.Log;
 
+import com.repolist.model.AppDatabase;
 import com.repolist.model.Repository;
 
 import org.json.JSONArray;
@@ -17,21 +21,31 @@ import java.util.concurrent.ExecutionException;
  * Singleton pattern
  */
 
-public class GithubRepoRepository {
-    private static final String TAG = "GithubRepoRepository";
+public class AppRepository {
+    private static final String TAG = "AppRepository";
 
-    private static GithubRepoRepository instance;
-    private ArrayList<Repository> dataSet = new ArrayList<>();
+    private static AppRepository instance;
+    private AppDatabase mDb;
+    private LiveData<Repository> mRepositories;
 
-    public static GithubRepoRepository getInstance(){
+    private AppRepository(Context context) {
+        mDb = AppDatabase.getInstance(context);
+    }
+
+    public static AppRepository getInstance(Context context){
         if(instance == null){
-            instance = new GithubRepoRepository();
+            instance = new AppRepository(context);
         }
         return instance;
     }
 
+    public LiveData<List<Repository>> getRepositories(){
+        return mDb.repositoryDao().getAll();
+    }
+
+    /*
     // Get data from a webservice or online source
-    public MutableLiveData<List<Repository>> getRepos(String username){
+    public LiveData<List<Repository>> getRepos(String username){
         Log.d(TAG, "**** 1");
         GetReposTask task = new GetReposTask();
         task.setGithubUserID(username);
@@ -51,6 +65,7 @@ public class GithubRepoRepository {
         data.setValue(dataSet);
         return data;
     }
+    */
 
     // parsing JSON Object returned from server:
     public ArrayList<Repository> parseJSON(String output){
@@ -60,12 +75,14 @@ public class GithubRepoRepository {
             JSONArray jsonArray = new JSONArray(output);
             for(int i=0; i<jsonArray.length(); i++){
                 jObject = jsonArray.getJSONObject(i);
-                int id                 = jObject.getInt("id");
-                String name           = jObject.getString("name");
-                String description    = jObject.getString("description");
-                int stargazers_count  = jObject.getInt("stargazers_count");
-                int watchers_count  = jObject.getInt("watchers_count");
-                String language = jObject.getString("language");
+
+                int id               = jObject.getInt("id");
+                String name          = jObject.getString("name");
+                String description   = jObject.getString("description");
+                int stargazers_count = jObject.getInt("stargazers_count");
+                int watchers_count   = jObject.getInt("watchers_count");
+                String language      = jObject.getString("language");
+
                 testRepos.add(new Repository(id, name, description, stargazers_count, watchers_count, language));
             }
         } catch (JSONException e) {

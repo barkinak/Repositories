@@ -1,35 +1,41 @@
 package com.repolist.viewmodel;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import android.app.Application;
 import android.util.Log;
 
 import com.repolist.model.Repository;
-import com.repolist.repositories.GithubRepoRepository;
+import com.repolist.repositories.AppRepository;
 
 import java.util.List;
 
-public class HomeActivityViewModel extends ViewModel {
+public class HomeActivityViewModel extends AndroidViewModel {
     private static final String TAG = "HomeActivityViewModel";
 
-    private GithubRepoRepository mGithubRepoRepository;
-    private MutableLiveData<List<Repository>> mRepos;
+    private AppRepository mAppRepository;
+    private LiveData<List<Repository>> mRepositories;
 
-    public void init(){
-        Log.d(TAG, "**** 2");
-        if(mRepos != null){
-            Log.d(TAG, "**** 3");
-            return;
-        }
-        Log.d(TAG, "**** 4");
-        mGithubRepoRepository = GithubRepoRepository.getInstance();
-        mRepos = mGithubRepoRepository.getRepos("bitcoin");
+    public HomeActivityViewModel(@NonNull Application application) {
+        super(application);
+        mAppRepository = AppRepository.getInstance(getApplication());
+        mRepositories = mAppRepository.getRepositories();
+    }
+
+
+    public void query(String query){
+        Log.d(TAG, "query: ");
+        //mRepositories.postValue(mAppRepository.getRepos("aea7").getValue());
     }
 
     public LiveData<List<Repository>> getRepos(){
-        Log.d(TAG, "**** 5");
-        return mRepos;
+        mAppRepository.getRepositories();
+        Log.d(TAG, "getRepos: ");
+        return mRepositories;
     }
 
 }

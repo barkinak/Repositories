@@ -11,6 +11,7 @@ import com.repolist.model.Repository;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -54,8 +55,8 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RepoListAdapter(OnRepoListener mOnRepoListener) {
-        this.mOnRepoListener = mOnRepoListener;
+    public RepoListAdapter() {
+
     }
 
     public void setRepos(List<Repository> repos){

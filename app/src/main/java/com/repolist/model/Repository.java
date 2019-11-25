@@ -130,4 +130,16 @@ public class Repository {
     }
 
     public String getLanguage() { return language; }
+
+    @Override
+    public String toString() {
+        return "Repository{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", stargazers_count=" + stargazers_count +
+                ", watchers_count=" + watchers_count +
+                ", language='" + language + '\'' +
+                '}';
+    }
 }

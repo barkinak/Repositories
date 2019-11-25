@@ -25,8 +25,6 @@ public class HomeActivity extends AppCompatActivity implements RepoDetailFragmen
 
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-
-        Navigation.findNavController(this, R.id.my_nav_host_fragment).navigate(R.id.repoDetailFragment);
     }
     @Override
     public void onResume() {
@@ -43,6 +41,7 @@ public class HomeActivity extends AppCompatActivity implements RepoDetailFragmen
         super.onDestroy();
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -62,6 +61,7 @@ public class HomeActivity extends AppCompatActivity implements RepoDetailFragmen
                 return super.onOptionsItemSelected(item);
         }
     }
+    */
 
     @Override
     public void onFragmentInteraction(Uri uri) {
