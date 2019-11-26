@@ -18,14 +18,13 @@ public class HomeActivityViewModel extends AndroidViewModel {
     private static final String TAG = "HomeActivityViewModel";
 
     private AppRepository mAppRepository;
-    private LiveData<List<Repository>> mRepositories;
+    public LiveData<List<Repository>> mRepositories;
 
     public HomeActivityViewModel(@NonNull Application application) {
         super(application);
         mAppRepository = AppRepository.getInstance(getApplication());
         mRepositories = mAppRepository.getRepositories();
     }
-
 
     public void query(String query){
         Log.d(TAG, "query: ");

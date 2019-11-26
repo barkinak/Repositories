@@ -2,15 +2,9 @@ package com.repolist.view;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.Navigation;
 
 import android.net.Uri;
 import android.os.Bundle;
-
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import com.repolist.R;
 
@@ -64,7 +58,5 @@ public class HomeActivity extends AppCompatActivity implements RepoDetailFragmen
     */
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
+    public void onFragmentInteraction(Uri uri) {}
 }

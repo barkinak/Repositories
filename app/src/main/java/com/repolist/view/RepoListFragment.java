@@ -31,7 +31,6 @@ import com.repolist.model.Repository;
 import com.repolist.view.adapter.RepoListAdapter;
 import com.repolist.viewmodel.HomeActivityViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,13 +42,13 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
 
     private HomeActivityViewModel mHomeActivityViewModel;
     private RepoListAdapter mRepoListAdapter;
+    private RepoListAdapter.OnRepoListener mRepoListener = this;
 
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
         setHasOptionsMenu(true);
 
         // Inflate the layout for this fragment
@@ -65,24 +64,22 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "onActivityCreated: ");
         initViewModel();
     }
 
     private void initViewModel() {
         mHomeActivityViewModel = ViewModelProviders.of(this).get(com.repolist.viewmodel.HomeActivityViewModel.class);
-        //mRepoListAdapter.setRepos(mHomeActivityViewModel.getRepos().getValue());
-        final Observer<List<Repository>> reposObserver = new Observer<List<Repository>>() {
-            @Override
-            public void onChanged(List<Repository> repositories) {
-                if(mRepoListAdapter == null){
-                    mRepoListAdapter = new RepoListAdapter();
-                    mRepoListAdapter.setRepos(repositories);
-                } else {
-                    mRepoListAdapter.notifyDataSetChanged();
-                }
+
+        final Observer<List<Repository>> reposObserver = repositories -> {
+            if(mRepoListAdapter == null){
+                mRepoListAdapter = new RepoListAdapter(mRepoListener);
+                mRepoListAdapter.setRepos(repositories);
+                mRecyclerView.setAdapter(mRepoListAdapter);
+            } else {
+                mRepoListAdapter.notifyDataSetChanged();
             }
         };
+        mHomeActivityViewModel.mRepositories.observe(this, reposObserver);
     }
 
     private void initRecyclerView() {
@@ -121,7 +118,6 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
-                Log.d(TAG, "onOptionsItemSelected: Search");
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
@@ -131,8 +127,9 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     }
 
     public void onRepoClick(int position){
-        Log.d(TAG, "clicked on pos " + position);
-        Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment).navigate(R.id.repoDetailFragment);
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", position);
+        Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment).navigate(R.id.repoDetailFragment, bundle);
     }
 
 }

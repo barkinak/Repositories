@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.repolist.model.AppDatabase;
 import com.repolist.model.Repository;
+import com.repolist.utilities.SampleData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +17,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Singleton pattern
@@ -27,23 +30,37 @@ public class AppRepository {
     private static AppRepository instance;
     private AppDatabase mDb;
     private LiveData<Repository> mRepositories;
+    private Executor executor = Executors.newSingleThreadExecutor();
 
     private AppRepository(Context context) {
+        Log.d(TAG, "AppRepository: ");
         mDb = AppDatabase.getInstance(context);
+        setRepositories(SampleData.getRepositories());
     }
 
     public static AppRepository getInstance(Context context){
+        Log.d(TAG, "getInstance: ");
         if(instance == null){
             instance = new AppRepository(context);
         }
         return instance;
     }
 
+    public void setRepositories(List<Repository> repos){
+        Log.d(TAG, "setRepositories: ");
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.repositoryDao().insertAll(repos);
+            }
+        });
+    }
+
     public LiveData<List<Repository>> getRepositories(){
+        Log.d(TAG, "getRepositories: ");
         return mDb.repositoryDao().getAll();
     }
 
-    /*
     // Get data from a webservice or online source
     public LiveData<List<Repository>> getRepos(String username){
         Log.d(TAG, "**** 1");
@@ -54,7 +71,7 @@ public class AppRepository {
         try {
             String result = task.get();
             Log.d(TAG, "****  RESULT " + result);
-            dataSet = parseJSON(result);
+            //dataSet = parseJSON(result);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -62,10 +79,9 @@ public class AppRepository {
         }
 
         MutableLiveData<List<Repository>> data = new MutableLiveData<>();
-        data.setValue(dataSet);
+        data.setValue(SampleData.getRepositories());
         return data;
     }
-    */
 
     // parsing JSON Object returned from server:
     public ArrayList<Repository> parseJSON(String output){

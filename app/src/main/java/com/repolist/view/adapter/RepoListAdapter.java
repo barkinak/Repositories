@@ -54,9 +54,8 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
         void onRepoClick (int position);
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public RepoListAdapter() {
-
+    public RepoListAdapter(OnRepoListener onRepoListener){
+        mOnRepoListener = onRepoListener;
     }
 
     public void setRepos(List<Repository> repos){
