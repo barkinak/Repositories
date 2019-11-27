@@ -3,8 +3,6 @@ package com.repolist.viewmodel;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import android.app.Application;
 import android.util.Log;
@@ -23,18 +21,11 @@ public class HomeActivityViewModel extends AndroidViewModel {
     public HomeActivityViewModel(@NonNull Application application) {
         super(application);
         mAppRepository = AppRepository.getInstance(getApplication());
-        mRepositories = mAppRepository.getRepositories();
+        mRepositories = mAppRepository.getRepositories("barkinak");
     }
 
     public void query(String query){
-        Log.d(TAG, "query: ");
-        //mRepositories.postValue(mAppRepository.getRepos("aea7").getValue());
-    }
-
-    public LiveData<List<Repository>> getRepos(){
-        mAppRepository.getRepositories();
-        Log.d(TAG, "getRepos: ");
-        return mRepositories;
+        mRepositories = mAppRepository.getRepositories(query);
     }
 
 }

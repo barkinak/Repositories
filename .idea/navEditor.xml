@@ -13,9 +13,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-3" />
-                            <option name="y" value="126" />
+                            <option name="x" value="-161" />
+                            <option name="y" value="258" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_repoDetailFragment_to_repoListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -25,8 +34,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-254" />
-                            <option name="y" value="129" />
+                            <option name="x" value="-332" />
+                            <option name="y" value="258" />
                           </Point>
                         </option>
                         <option name="myPositions">
