@@ -40,10 +40,32 @@ public class AppRepository {
         return instance;
     }
 
-    public void setRepositories(String query){
-        executor.execute(() -> mDb.repositoryDao().insertAll(getReposFromGithub(query)));
+    public Repository getRepositoryById(int id){
+        return mDb.repositoryDao().getRepositoryById(id);
     }
 
+    public void setRepositories(String query){
+        List<Repository> repositories = getReposFromGithub(query);
+        executor.execute(() -> mDb.repositoryDao().insertAll(repositories));
+    }
+
+    public void deleteRepositories(){
+        executor.execute(() -> mDb.repositoryDao().deleteAll());
+    }
+
+    /**
+     * Gets repositories of the last queried user
+     * @return
+     */
+    public LiveData<List<Repository>> getRepositories(){
+        return mDb.repositoryDao().getAll();
+    }
+
+    /**
+     * Gets repositories of queried user
+     * @param query
+     * @return
+     */
     public LiveData<List<Repository>> getRepositories(String query){
         setRepositories(query);
         return mDb.repositoryDao().getAll();
@@ -66,7 +88,7 @@ public class AppRepository {
         return repositories;
     }
 
-    // parsing JSON Object returned from server:
+    // Parsing JSON Object returned from server
     public ArrayList<Repository> parseJSON(String output){
         ArrayList<Repository> repositories = new ArrayList<>();
         try {

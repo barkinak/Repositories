@@ -14,6 +14,7 @@ import java.util.Date;
 public class Repository {
     @PrimaryKey(autoGenerate = true)
     public int id;
+    public int repo_id;
     public String name;
     public String description;
     public int stargazers_count;
@@ -91,8 +92,9 @@ public class Repository {
     @Ignore
     public Repository() {}
 
-    public Repository(int id, String name, String description, int stargazers_count, int watchers_count, String language) {
+    public Repository(int id, int repo_id, String name, String description, int stargazers_count, int watchers_count, String language) {
         this.id = id;
+        this.repo_id = repo_id;
         this.name = name;
         this.description = description;
         this.stargazers_count = stargazers_count;
@@ -101,7 +103,8 @@ public class Repository {
     }
 
     @Ignore
-    public Repository(String name, String description, int stargazers_count, int watchers_count, String language) {
+    public Repository(int repo_id, String name, String description, int stargazers_count, int watchers_count, String language) {
+        this.repo_id = repo_id;
         this.name = name;
         this.description = description;
         this.stargazers_count = stargazers_count;
@@ -111,6 +114,10 @@ public class Repository {
 
     public int getId() {
         return id;
+    }
+
+    public int getRepoId() {
+        return repo_id;
     }
 
     public String getName() {

@@ -26,6 +26,9 @@ public interface RepositoryDao {
     @Query("SELECT * FROM repositories ORDER BY id DESC")
     LiveData<List<Repository>> getAll();
 
+    @Query("SELECT * FROM repositories ORDER BY id DESC")
+    List<Repository> getAllTest();
+
     @Query("DELETE FROM repositories")
     int deleteAll();
 

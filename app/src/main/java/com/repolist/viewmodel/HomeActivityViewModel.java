@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.repolist.model.Repository;
 import com.repolist.repositories.AppRepository;
@@ -21,11 +20,15 @@ public class HomeActivityViewModel extends AndroidViewModel {
     public HomeActivityViewModel(@NonNull Application application) {
         super(application);
         mAppRepository = AppRepository.getInstance(getApplication());
-        mRepositories = mAppRepository.getRepositories("barkinak");
+        mRepositories = mAppRepository.getRepositories();
     }
 
-    public void query(String query){
+    public void getRepositories(String query){
         mRepositories = mAppRepository.getRepositories(query);
+    }
+
+    public void deleteAllRepositories(){
+        mAppRepository.deleteRepositories();
     }
 
 }

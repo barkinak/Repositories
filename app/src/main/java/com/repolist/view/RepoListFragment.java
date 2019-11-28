@@ -63,17 +63,16 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
+        return inflater.inflate(R.layout.repo_list_fragment, container, false);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
-
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.repo_list_fragment, container, false);
-        rootView.setTag(TAG);
-
-        ButterKnife.bind(this, rootView);
+        view.setTag(TAG);
+        ButterKnife.bind(this, view);
         initRecyclerView();
-
-        return rootView;
     }
 
     @Override
@@ -139,7 +138,6 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState: ");
     }
 
     private void initViewModel() {
@@ -151,6 +149,7 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
                 mRepoListAdapter.setRepos(repositories);
                 mRecyclerView.setAdapter(mRepoListAdapter);
             } else {
+                mRepoListAdapter.setRepos(repositories);
                 mRepoListAdapter.notifyDataSetChanged();
             }
         };
@@ -177,8 +176,8 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
         SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d(TAG, "onQueryTextSubmit: " + query);
-                mHomeActivityViewModel.query(query);
+                mHomeActivityViewModel.deleteAllRepositories();
+                mHomeActivityViewModel.getRepositories(query);
                 return false;
             }
 
