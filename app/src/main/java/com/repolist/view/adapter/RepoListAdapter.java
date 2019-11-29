@@ -63,8 +63,8 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
         notifyDataSetChanged();
     }
 
-    public int getReposSize(){
-        return mRepos.size();
+    public Repository getRepoAtPosition(int position){
+        return mRepos.get(position);
     }
 
     // Create new views

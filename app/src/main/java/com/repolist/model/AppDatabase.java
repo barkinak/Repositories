@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 @Database(entities = {Repository.class}, version = 1, exportSchema = false)
-@TypeConverters({DateConverter.class, GithubUserConverter.class})
+@TypeConverters({DateConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "AppDatabase.db";
     private static volatile AppDatabase instance;

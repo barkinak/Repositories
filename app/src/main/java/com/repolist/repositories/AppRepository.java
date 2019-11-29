@@ -106,7 +106,11 @@ public class AppRepository {
                 owner = repository.getJSONObject("owner");
                 String avatar_url    = owner.getString("avatar_url");
                 String user_id       = owner.getString("id");
-                repositories.add(new Repository(id, name, description, stargazers_count, watchers_count, language));
+
+                Repository r = new Repository(id, name, description, stargazers_count, watchers_count, language);
+                r.setAvatarUrl(avatar_url);
+                r.setUserId(user_id);
+                repositories.add(r);
             }
         } catch (JSONException e) {
             e.printStackTrace();

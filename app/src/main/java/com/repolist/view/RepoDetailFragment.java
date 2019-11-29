@@ -9,16 +9,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.repolist.R;
 import com.repolist.model.Repository;
 import com.repolist.viewmodel.DetailFragmentViewModel;
-import com.repolist.viewmodel.HomeActivityViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +35,13 @@ import com.repolist.viewmodel.HomeActivityViewModel;
  */
 public class RepoDetailFragment extends Fragment {
     private static final String TAG = "RepoDetailFragment";
+
+    @BindView(R.id.owner)
+    TextView mOwner;
+    @BindView(R.id.name)
+    TextView mName;
+    @BindView(R.id.description)
+    TextView mDescription;
 
     private DetailFragmentViewModel mDetailFragmentViewModel;
 
@@ -67,7 +79,6 @@ public class RepoDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
-            Log.d(TAG, "onCreate: mParam1 " + mParam1);
         }
     }
 
@@ -80,6 +91,8 @@ public class RepoDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+        ButterKnife.bind(this, view);
         initializeViewModel();
     }
 
@@ -96,6 +109,8 @@ public class RepoDetailFragment extends Fragment {
             public void onChanged(@Nullable Repository repository) {
                 if(repository != null){
                     Log.d(TAG, "onChanged: repository " + repository.getName());
+                    mName.setText(repository.getName());
+                    mDescription.setText(repository.getDescription());
                 }
             }
         });
@@ -136,6 +151,23 @@ public class RepoDetailFragment extends Fragment {
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.details_page_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.favorite_button:
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
         }
     }
 }
