@@ -6,9 +6,9 @@ package com.repolist.model;
 
 public class GithubUser {
     public String avatar_url;
+    public String login;
 
     /*
-    public String login;
     public long id;
     public String node_id;
     public String gravatar_id;
@@ -27,11 +27,14 @@ public class GithubUser {
     public Boolean site_admin;
     */
 
-    public GithubUser(String avatar_url){
+    public GithubUser(String avatar_url, String login){
         this.avatar_url = avatar_url;
+        this.login = login;
     }
 
     public String getAvatarUrl() {
         return avatar_url;
     }
+
+    public String getLogin() { return login; }
 }

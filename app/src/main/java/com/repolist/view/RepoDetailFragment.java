@@ -9,21 +9,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.repolist.R;
 import com.repolist.model.Repository;
 import com.repolist.viewmodel.DetailFragmentViewModel;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,15 +44,20 @@ public class RepoDetailFragment extends Fragment {
     TextView mName;
     @BindView(R.id.description)
     TextView mDescription;
+    @BindView(R.id.avatar)
+    ImageView mAvatar;
 
     private DetailFragmentViewModel mDetailFragmentViewModel;
+    private Repository mRepository;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "id";
+    private static final String ARG_PARAM2 = "is_favorite";
 
     // TODO: Rename and change types of parameters
     private int mParam1;
+    private boolean mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,10 +73,11 @@ public class RepoDetailFragment extends Fragment {
      * @return A new instance of fragment RepoDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RepoDetailFragment newInstance(int param1) {
+    public static RepoDetailFragment newInstance(int param1, boolean param2) {
         RepoDetailFragment fragment = new RepoDetailFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, param1);
+        args.putBoolean(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,6 +87,7 @@ public class RepoDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
+            mParam2 = getArguments().getBoolean(ARG_PARAM2);
         }
     }
 
@@ -104,14 +113,17 @@ public class RepoDetailFragment extends Fragment {
 
     private void initializeViewModel() {
         mDetailFragmentViewModel = ViewModelProviders.of(this).get(com.repolist.viewmodel.DetailFragmentViewModel.class);
-        mDetailFragmentViewModel.mRepository.observe(this, new Observer<Repository>() {
-            @Override
-            public void onChanged(@Nullable Repository repository) {
-                if(repository != null){
-                    Log.d(TAG, "onChanged: repository " + repository.getName());
-                    mName.setText(repository.getName());
-                    mDescription.setText(repository.getDescription());
-                }
+        mDetailFragmentViewModel.mRepository.observe(this, repository -> {
+            if(repository != null){
+                mRepository = repository;
+
+                // Set repository name, description and owner
+                mOwner.setText(repository.getUserId());
+                mName.setText(repository.getName());
+                mDescription.setText(repository.getDescription());
+
+                // Set avatar picture
+                Picasso.with(getActivity()).load(repository.getAvatarUrl()).into(mAvatar);
             }
         });
     }
@@ -157,12 +169,24 @@ public class RepoDetailFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.details_page_menu, menu);
+        if(mParam2){
+            menu.getItem(0).setIcon(R.drawable.baseline_star_white_48dp);
+        } else {
+            menu.getItem(0).setIcon(R.drawable.baseline_star_border_white_48dp);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.favorite_button:
+                if(!mRepository.getIsFavorite()){
+                    item.setIcon(R.drawable.baseline_star_white_48dp);
+                    mDetailFragmentViewModel.updateIsFavorite(mParam1, true);
+                } else {
+                    item.setIcon(R.drawable.baseline_star_border_white_48dp);
+                    mDetailFragmentViewModel.updateIsFavorite(mParam1, false);
+                }
                 return true;
             default:
                 // If we got here, the user's action was not recognized.

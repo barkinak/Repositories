@@ -34,4 +34,7 @@ public interface RepositoryDao {
 
     @Query("SELECT COUNT(*) FROM repositories")
     int getCount();
+
+    @Query("UPDATE repositories SET is_favorite =:b WHERE id = :id")
+    int updateIsFavorite(int id, boolean b);
 }

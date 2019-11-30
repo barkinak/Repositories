@@ -40,6 +40,10 @@ public class AppRepository {
         return instance;
     }
 
+    public void updateIsRepository(int id, Boolean b){
+        executor.execute(() -> mDb.repositoryDao().updateIsFavorite(id, b));
+    }
+
     public Repository getRepositoryById(int id){
         return mDb.repositoryDao().getRepositoryById(id);
     }
@@ -105,7 +109,7 @@ public class AppRepository {
 
                 owner = repository.getJSONObject("owner");
                 String avatar_url    = owner.getString("avatar_url");
-                String user_id       = owner.getString("id");
+                String user_id       = owner.getString("login");
 
                 Repository r = new Repository(id, name, description, stargazers_count, watchers_count, language);
                 r.setAvatarUrl(avatar_url);

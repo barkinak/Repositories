@@ -88,10 +88,10 @@ public class RepoDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mDbHelper.checkFavorite(Integer.toString(repoID))){
                     mDbHelper.deleteRepo(Integer.toString(repoID));
-                    mFavoriteButton.setBackgroundResource(R.drawable.baseline_star_border_24);
+                    mFavoriteButton.setBackgroundResource(R.drawable.baseline_star_border_white_48dp);
                 } else {
                     mDbHelper.addRepo(ownerID, repoID);
-                    mFavoriteButton.setBackgroundResource(R.drawable.baseline_star_24);
+                    mFavoriteButton.setBackgroundResource(R.drawable.baseline_star_white_48dp);
                 }
             }
         });

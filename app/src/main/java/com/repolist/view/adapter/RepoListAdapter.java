@@ -3,6 +3,7 @@ package com.repolist.view.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.repolist.R;
@@ -33,10 +34,12 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
         TextView mWatchersCount;
         @BindView(R.id.language)
         TextView mLanguage;
+        @BindView(R.id.star_image)
+        ImageView mFavorite;
 
         OnRepoListener onRepoListener;
 
-        public MyViewHolder(View v, OnRepoListener onRepoListener) {
+        MyViewHolder(View v, OnRepoListener onRepoListener) {
             super(v);
             ButterKnife.bind(this, v);
 
@@ -71,8 +74,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
     @Override
     public RepoListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.repo_layout, parent, false);
-        MyViewHolder vh = new MyViewHolder(view, mOnRepoListener);
-        return vh;
+        return new MyViewHolder(view, mOnRepoListener);
     }
 
     // Replace the contents of a view
@@ -84,6 +86,15 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
         holder.mWatchersCount.setText   (Integer.toString(repository.getWatchersCount()));
         holder.mLanguage.setText        (repository.getLanguage());
         holder.mRepoDescription.setText (repository.getDescription());
+
+        /*
+          If user clicked on the favorite button in the details page, the star will be filled.
+          Otherwise just the border will be shown on the list.
+         */
+        if(repository.getIsFavorite())
+            holder.mFavorite.setImageResource(R.drawable.baseline_star_white_48dp);
+        else
+            holder.mFavorite.setImageResource(R.drawable.baseline_star_border_white_48dp);
     }
 
     // getItemCount() is called many times, and when it is first called,

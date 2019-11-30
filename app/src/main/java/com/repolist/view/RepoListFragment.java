@@ -176,8 +176,9 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
 
         // Set SearchView text color
         EditText searchEditText = mSearchView.findViewById(androidx.appcompat.R.id.search_src_text);
-        searchEditText.setTextColor(getResources().getColor(R.color.white));
+        searchEditText.setHint("Enter repository name");
         searchEditText.setHintTextColor(getResources().getColor(R.color.white));
+        searchEditText.setTextColor(getResources().getColor(R.color.white));
 
         SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
             @Override
@@ -210,6 +211,7 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     public void onRepoClick(int position){
         Bundle bundle = new Bundle();
         bundle.putInt("id", mRepoListAdapter.getRepoAtPosition(position).getId());
+        bundle.putBoolean("is_favorite", mRepoListAdapter.getRepoAtPosition(position).getIsFavorite());
         Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment).navigate(R.id.repoDetailFragment, bundle);
     }
 
