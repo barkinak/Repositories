@@ -3,7 +3,6 @@ package com.repolist.repositories;
 import androidx.lifecycle.LiveData;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.repolist.model.AppDatabase;
 import com.repolist.model.Repository;
@@ -75,7 +74,11 @@ public class AppRepository {
         return mDb.repositoryDao().getAll();
     }
 
-    // Get data from a webservice or online source
+    /**
+     * Method that starts an AsyncTask to get repositories of queried user from GitHub
+     * @param username ID of GitHub user
+     * @return List of repositories of a GitHub user
+     */
     public List<Repository> getReposFromGithub(String username){
         List<Repository> repositories = new ArrayList<>();
         GetReposTask task = new GetReposTask();
@@ -92,7 +95,11 @@ public class AppRepository {
         return repositories;
     }
 
-    // Parsing JSON Object returned from server
+    /**
+     * Parsing JSON Object returned from server
+     * @param output JSON String returned from GitHub
+     * @return array of parsed repositories
+     */
     public ArrayList<Repository> parseJSON(String output){
         ArrayList<Repository> repositories = new ArrayList<>();
         try {

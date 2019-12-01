@@ -1,11 +1,10 @@
 <resources>
-    <string name="app_name">RepoList</string>
+    <string name="app_name">Repositories</string>
     <string name="home">Home</string>
-    <string name="search_field_hint">Enter repo name</string>
-    <string name="submit_button">Submit</string>
-    <string name="description_of_repository">Description of repository</string>
     <string name="search_title">Enter repository name</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_description">No description</string>
+    <string name="repository_description">Repository description</string>
+    <string name="repository_name">Repository name</string>
+    <string name="owner">Owner</string>
+    <string name="favorite_button">Favorite Button</string>
 </resources>

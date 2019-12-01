@@ -92,9 +92,9 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
           Otherwise just the border will be shown on the list.
          */
         if(repository.getIsFavorite())
-            holder.mFavorite.setImageResource(R.drawable.baseline_star_white_48dp);
+            holder.mFavorite.setImageResource(R.drawable.ic_star_gray_48dp);
         else
-            holder.mFavorite.setImageResource(R.drawable.baseline_star_border_white_48dp);
+            holder.mFavorite.setImageResource(R.drawable.ic_star_border_gray_48dp);
     }
 
     // getItemCount() is called many times, and when it is first called,

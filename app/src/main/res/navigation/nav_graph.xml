@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
@@ -8,17 +9,26 @@
         android:id="@+id/repoListFragment"
         android:name="com.repolist.view.RepoListFragment"
         android:label="repo_list_fragment"
-        tools:layout="@layout/repo_list_fragment" >
+        tools:layout="@layout/fragment_repo_list" >
         <action
             android:id="@+id/action_repoListFragment_to_repoDetailFragment"
             app:destination="@id/repoDetailFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <argument
+            android:name="id"
+            app:argType="integer"/>
     </fragment>
 
     <fragment
         android:id="@+id/repoDetailFragment"
         android:name="com.repolist.view.RepoDetailFragment"
         android:label="fragment_repo_detail"
-        tools:layout="@layout/fragment_repo_detail" />
+        tools:layout="@layout/fragment_repo_detail" >
+        <action
+            android:id="@+id/action_repoDetailFragment_to_repoListFragment"
+            app:destination="@id/repoListFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
 </navigation>

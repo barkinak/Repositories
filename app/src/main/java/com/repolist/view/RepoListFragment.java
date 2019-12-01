@@ -2,6 +2,7 @@ package com.repolist.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -18,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,22 +48,16 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
 
-    // Lifecycle methods
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Log.d(TAG, "onAttach: ");
-    }
+    private Toolbar mToolbar;
 
+    // Lifecycle methods
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: ");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
         return inflater.inflate(R.layout.fragment_repo_list, container, false);
     }
 
@@ -74,71 +68,13 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
         view.setTag(TAG);
         ButterKnife.bind(this, view);
         initRecyclerView();
+        initToolbar();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initViewModel();
-        Log.d(TAG, "onActivityCreated: ");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: ");
-    }
-
-    // Fragment is active
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: ");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d(TAG, "onDestroyView: ");
-        Log.d(TAG, "**************************************");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d(TAG, "onDetach: ");
-    }
-
-    // ---------------------------------------------------------------------------------------------
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        Log.d(TAG, "onViewStateRestored: ");
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     private void initViewModel() {
@@ -161,9 +97,12 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mRepoListAdapter);
+    }
 
-        //DividerItemDecoration divider = new DividerItemDecoration(mRecyclerView.getContext(), layoutManager.getOrientation());
-        //mRecyclerView.addItemDecoration(divider);
+    private void initToolbar() {
+        mToolbar = getActivity().findViewById(R.id.toolbar);
+        mToolbar.setTitle("Repositories");
+        mToolbar.setNavigationIcon(null);
     }
 
     @Override
@@ -212,7 +151,7 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
         Bundle bundle = new Bundle();
         bundle.putInt("id", mRepoListAdapter.getRepoAtPosition(position).getId());
         bundle.putBoolean("is_favorite", mRepoListAdapter.getRepoAtPosition(position).getIsFavorite());
-        Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment).navigate(R.id.repoDetailFragment, bundle);
+        Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment).navigate(R.id.action_repoListFragment_to_repoDetailFragment, bundle);
     }
 
 }

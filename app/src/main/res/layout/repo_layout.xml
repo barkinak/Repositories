@@ -21,7 +21,7 @@
             android:id="@+id/repo_name"
             android:ellipsize="end"
             android:maxLines="1"
-            android:layout_width="320dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="@color/theme_github_4"
@@ -30,7 +30,7 @@
 
         <ImageView
             android:id="@+id/star_image"
-            android:src="@drawable/baseline_star_border_24"
+            card_view:srcCompat="@drawable/ic_star_border_gray_48dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -42,59 +42,83 @@
             android:layout_below="@+id/repo_name"
             android:ellipsize="end"
             android:maxLines="1"
-            android:layout_width="320dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:text="@string/description_of_repository"
+            android:text="@string/no_description"
             android:textColor="@color/theme_github_4"/>
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/repo_details"
             android:layout_below="@+id/repo_description"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/stargazers_count_image"
-                android:src="@drawable/baseline_star_24"
+                card_view:srcCompat="@drawable/ic_star_gray_24dp"
+
                 android:layout_width="15dp"
                 android:layout_height="15dp"/>
 
             <TextView
                 android:id="@+id/stargazers_count"
+
+                android:layout_toRightOf="@+id/stargazers_count_image"
+                android:layout_toEndOf="@+id/stargazers_count_image"
+
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:text="0"
                 android:textColor="@color/theme_github_4"/>
 
             <ImageView
                 android:id="@+id/watchers_count_image"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/baseline_share_white_18dp"
+                card_view:srcCompat="@drawable/ic_share_gray_24dp"
+
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+
+                android:layout_marginStart="75dp"
+                android:layout_marginLeft="75dp"
+
                 android:layout_width="15dp"
                 android:layout_height="15dp"/>
 
             <TextView
                 android:id="@+id/watchers_count"
+
+                android:layout_toRightOf="@+id/watchers_count_image"
+                android:layout_toEndOf="@+id/watchers_count_image"
+
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:text="0"
                 android:textColor="@color/theme_github_4"/>
 
             <TextView
                 android:id="@+id/language"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/theme_github_4"/>
 
-        </LinearLayout>
+                android:layout_toRightOf="@+id/watchers_count_image"
+                android:layout_toEndOf="@+id/watchers_count_image"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:layout_marginLeft="120dp"
+                android:layout_marginStart="120dp"
+
+                android:textColor="@color/theme_github_4" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

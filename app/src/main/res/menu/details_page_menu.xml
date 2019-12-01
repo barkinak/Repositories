@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/search"
-        android:title="@string/search_title"
-        android:icon="@drawable/ic_search_white_48dp"
+    <item
+        android:id="@+id/favorite_button"
+        android:icon="@drawable/ic_star_border_white_48dp"
         app:showAsAction="collapseActionView|ifRoom"
-        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+        android:title="@string/favorite_button" />
 </menu>

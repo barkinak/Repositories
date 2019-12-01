@@ -6,10 +6,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -46,9 +47,16 @@ public class RepoDetailFragment extends Fragment {
     TextView mDescription;
     @BindView(R.id.avatar)
     ImageView mAvatar;
+    @BindView(R.id.detail_stargazers_count)
+    TextView mStargazersCount;
+    @BindView(R.id.detail_watchers_count)
+    TextView mWatchersCount;
+    @BindView(R.id.detail_language)
+    TextView mLanguage;
 
     private DetailFragmentViewModel mDetailFragmentViewModel;
     private Repository mRepository;
+    private Toolbar mToolbar;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -100,9 +108,14 @@ public class RepoDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
         initializeViewModel();
+
+        mToolbar = getActivity().findViewById(R.id.toolbar);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mToolbar.setNavigationOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment).navigate(R.id.action_repoDetailFragment_to_repoListFragment));
     }
 
     @Override
@@ -121,9 +134,14 @@ public class RepoDetailFragment extends Fragment {
                 mOwner.setText(repository.getUserId());
                 mName.setText(repository.getName());
                 mDescription.setText(repository.getDescription());
+                mStargazersCount.setText(repository.getStargazersCount());
+                mWatchersCount.setText(repository.getWatchersCount());
+                mLanguage.setText(repository.getLanguage());
 
                 // Set avatar picture
                 Picasso.with(getActivity()).load(repository.getAvatarUrl()).into(mAvatar);
+
+                mToolbar.setTitle(repository.getName());
             }
         });
     }
@@ -170,9 +188,9 @@ public class RepoDetailFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.details_page_menu, menu);
         if(mParam2){
-            menu.getItem(0).setIcon(R.drawable.baseline_star_white_48dp);
+            menu.getItem(0).setIcon(R.drawable.ic_star_white_48dp);
         } else {
-            menu.getItem(0).setIcon(R.drawable.baseline_star_border_white_48dp);
+            menu.getItem(0).setIcon(R.drawable.ic_star_border_white_48dp);
         }
     }
 
@@ -181,10 +199,10 @@ public class RepoDetailFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.favorite_button:
                 if(!mRepository.getIsFavorite()){
-                    item.setIcon(R.drawable.baseline_star_white_48dp);
+                    item.setIcon(R.drawable.ic_star_white_48dp);
                     mDetailFragmentViewModel.updateIsFavorite(mParam1, true);
                 } else {
-                    item.setIcon(R.drawable.baseline_star_border_white_48dp);
+                    item.setIcon(R.drawable.ic_star_border_white_48dp);
                     mDetailFragmentViewModel.updateIsFavorite(mParam1, false);
                 }
                 return true;
