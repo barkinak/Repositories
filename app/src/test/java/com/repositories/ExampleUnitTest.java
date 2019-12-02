@@ -1,4 +1,4 @@
-package com.repolist;
+package com.repositories;
 
 import org.junit.Test;
 

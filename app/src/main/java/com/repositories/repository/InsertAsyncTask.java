@@ -1,9 +1,9 @@
-package com.repolist.repositories;
+package com.repositories.repository;
 
 import android.os.AsyncTask;
 
-import com.repolist.model.Repository;
-import com.repolist.model.RepositoryDao;
+import com.repositories.model.Repository;
+import com.repositories.db.RepositoryDao;
 
 public class InsertAsyncTask extends AsyncTask<Void, Void, Boolean> {
 

@@ -1,4 +1,4 @@
-package com.repolist.view.adapter;
+package com.repositories.view.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.repolist.R;
-import com.repolist.model.Repository;
+import com.repositories.R;
+import com.repositories.model.Repository;
 
 import java.util.List;
 

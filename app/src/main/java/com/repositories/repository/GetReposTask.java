@@ -1,4 +1,4 @@
-package com.repolist.repositories;
+package com.repositories.repository;
 
 import android.os.AsyncTask;
 

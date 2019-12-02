@@ -1,4 +1,4 @@
-package com.repolist.view;
+package com.repositories.view;
 
 import android.content.Context;
 import android.net.Uri;
@@ -23,9 +23,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.repolist.R;
-import com.repolist.model.Repository;
-import com.repolist.viewmodel.DetailFragmentViewModel;
+import com.repositories.R;
+import com.repositories.model.Repository;
+import com.repositories.viewmodel.DetailFragmentViewModel;
+
 import com.squareup.picasso.Picasso;
 
 /**
@@ -47,11 +48,12 @@ public class RepoDetailFragment extends Fragment {
     TextView mDescription;
     @BindView(R.id.avatar)
     ImageView mAvatar;
-    @BindView(R.id.detail_stargazers_count)
+
+    //@BindView(R.id.detail_stargazers_count)
     TextView mStargazersCount;
-    @BindView(R.id.detail_watchers_count)
+    //@BindView(R.id.detail_watchers_count)
     TextView mWatchersCount;
-    @BindView(R.id.detail_language)
+    //@BindView(R.id.detail_language)
     TextView mLanguage;
 
     private DetailFragmentViewModel mDetailFragmentViewModel;
@@ -113,6 +115,9 @@ public class RepoDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
         initializeViewModel();
 
+        mStargazersCount = getActivity().findViewById(R.id.detail_stargazers_count);
+        mWatchersCount = getActivity().findViewById(R.id.detail_watchers_count);
+
         mToolbar = getActivity().findViewById(R.id.toolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         mToolbar.setNavigationOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment).navigate(R.id.action_repoDetailFragment_to_repoListFragment));
@@ -125,7 +130,7 @@ public class RepoDetailFragment extends Fragment {
     }
 
     private void initializeViewModel() {
-        mDetailFragmentViewModel = ViewModelProviders.of(this).get(com.repolist.viewmodel.DetailFragmentViewModel.class);
+        mDetailFragmentViewModel = ViewModelProviders.of(this).get(DetailFragmentViewModel.class);
         mDetailFragmentViewModel.mRepository.observe(this, repository -> {
             if(repository != null){
                 mRepository = repository;
@@ -134,9 +139,8 @@ public class RepoDetailFragment extends Fragment {
                 mOwner.setText(repository.getUserId());
                 mName.setText(repository.getName());
                 mDescription.setText(repository.getDescription());
-                mStargazersCount.setText(repository.getStargazersCount());
-                mWatchersCount.setText(repository.getWatchersCount());
-                mLanguage.setText(repository.getLanguage());
+                mStargazersCount.setText(Integer.toString(repository.getStargazersCount()));
+                mWatchersCount.setText(Integer.toString(repository.getWatchersCount()));
 
                 // Set avatar picture
                 Picasso.with(getActivity()).load(repository.getAvatarUrl()).into(mAvatar);

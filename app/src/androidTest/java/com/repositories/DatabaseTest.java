@@ -1,12 +1,12 @@
-package com.repolist;
+package com.repositories;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.repolist.model.AppDatabase;
-import com.repolist.model.Repository;
-import com.repolist.model.RepositoryDao;
-import com.repolist.utilities.SampleData;
+import com.repositories.db.AppDatabase;
+import com.repositories.model.Repository;
+import com.repositories.db.RepositoryDao;
+import com.repositories.utilities.SampleData;
 
 import org.junit.After;
 import org.junit.Before;

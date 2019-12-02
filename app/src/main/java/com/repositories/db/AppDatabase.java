@@ -1,6 +1,8 @@
-package com.repolist.model;
+package com.repositories.db;
 
 import android.content.Context;
+
+import com.repositories.model.Repository;
 
 import androidx.room.Database;
 import androidx.room.Room;

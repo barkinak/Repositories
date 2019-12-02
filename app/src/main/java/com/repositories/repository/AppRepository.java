@@ -1,11 +1,11 @@
-package com.repolist.repositories;
+package com.repositories.repository;
 
 import androidx.lifecycle.LiveData;
 
 import android.content.Context;
 
-import com.repolist.model.AppDatabase;
-import com.repolist.model.Repository;
+import com.repositories.db.AppDatabase;
+import com.repositories.model.Repository;
 
 import org.json.JSONArray;
 import org.json.JSONException;

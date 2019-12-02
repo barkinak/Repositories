@@ -1,4 +1,4 @@
-package com.repolist.model;
+package com.repositories.db;
 
 import androidx.room.TypeConverter;
 

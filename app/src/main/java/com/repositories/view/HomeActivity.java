@@ -1,4 +1,4 @@
-package com.repolist.view;
+package com.repositories.view;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.repolist.R;
+import com.repositories.R;
 
 public class HomeActivity extends AppCompatActivity implements RepoDetailFragment.OnFragmentInteractionListener {
 

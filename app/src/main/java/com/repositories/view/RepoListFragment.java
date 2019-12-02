@@ -1,4 +1,4 @@
-package com.repolist.view;
+package com.repositories.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -27,10 +27,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.repolist.R;
-import com.repolist.model.Repository;
-import com.repolist.view.adapter.RepoListAdapter;
-import com.repolist.viewmodel.HomeActivityViewModel;
+import com.repositories.R;
+import com.repositories.model.Repository;
+import com.repositories.view.adapter.RepoListAdapter;
+import com.repositories.viewmodel.HomeActivityViewModel;
 
 import java.util.List;
 
@@ -78,7 +78,7 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     }
 
     private void initViewModel() {
-        mHomeActivityViewModel = ViewModelProviders.of(this).get(com.repolist.viewmodel.HomeActivityViewModel.class);
+        mHomeActivityViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
 
         final Observer<List<Repository>> reposObserver = repositories -> {
             if(mRepoListAdapter == null){

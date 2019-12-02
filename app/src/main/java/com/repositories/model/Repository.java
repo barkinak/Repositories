@@ -1,4 +1,4 @@
-package com.repolist.model;
+package com.repositories.model;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;

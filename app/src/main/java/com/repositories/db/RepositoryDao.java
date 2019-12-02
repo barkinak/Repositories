@@ -1,4 +1,6 @@
-package com.repolist.model;
+package com.repositories.db;
+
+import com.repositories.model.Repository;
 
 import java.util.List;
 

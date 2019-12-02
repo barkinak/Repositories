@@ -1,4 +1,4 @@
-package com.repolist.viewmodel;
+package com.repositories.viewmodel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 import android.app.Application;
 import android.util.Log;
 
-import com.repolist.model.Repository;
-import com.repolist.repositories.AppRepository;
+import com.repositories.model.Repository;
+import com.repositories.repository.AppRepository;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;

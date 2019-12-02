@@ -1,4 +1,4 @@
-package com.repolist.model;
+package com.repositories.model;
 
 /**
  * Represents the owner of a Repository returned from Github API.
