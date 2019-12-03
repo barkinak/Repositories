@@ -115,7 +115,7 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
 
         // Set SearchView text color
         EditText searchEditText = mSearchView.findViewById(androidx.appcompat.R.id.search_src_text);
-        searchEditText.setHint("Enter repository name");
+        searchEditText.setHint("Enter username");
         searchEditText.setHintTextColor(getResources().getColor(R.color.white));
         searchEditText.setTextColor(getResources().getColor(R.color.white));
 
