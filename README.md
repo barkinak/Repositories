@@ -2,14 +2,18 @@
 
 A Github Repository listing application is created using MVVM pattern. Android Jetpack's Architecture Components like `ViewModel`, `LiveData`, `Room` are used. Users can query GitHub to get the repositories of a certain user and add repositories to their favorites list. This application is created for an Android Interview Project where requirements can be found [here](https://github.com/barkinak/Repositories/blob/master/content/Android%20Developer%20Interview%20Project.pdf). It can be tested with the apk file [here](https://github.com/barkinak/Repositories/blob/master/content/app-debug.apk). The diagram below shows the recommended architecture between modules by Android.
 
-<img src="https://developer.android.com/topic/libraries/architecture/images/final-architecture.png" width="720" title="Architecture Diagram">
+<p align="center">
+    <img src="https://developer.android.com/topic/libraries/architecture/images/final-architecture.png" width="720" title="Architecture Diagram">
+</p>
 
 ### View
 The UI of the app is demonstrated below and consists of 2 pages. First page contains the list of repositories of the queried GitHub user. The second page opens when the user clicks on a repository showing detailed information on that repository. <br>
 
 Repository list is displayed using a `RecyclerView`. Each repository is displayed within a container called `CardView`. A `SearchView` is added to ActionBar. Using this widget, users can enter the GitHub username they want to query.<br>
 
-<img align="left" src="https://github.com/barkinak/Repositories/blob/master/content/Repositories.gif" width="360" title="App GIF">
+<p align="center">
+  <img align="center" src="https://github.com/barkinak/Repositories/blob/master/content/Repositories.gif" width="360" title="App GIF">
+</p>
 
 Navigation is handled by creating a navigation graph. This implements best practices for navigation and keeps all screens in a single activity. It makes is easy to pass data between screens and simplifies animations. 
 
