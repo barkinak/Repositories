@@ -9,12 +9,14 @@ A Github Repository listing application is created using MVVM pattern. Android J
 ### View
 The UI of the app is demonstrated below and consists of 2 pages. First page contains the list of repositories of the queried GitHub user. The second page opens when the user clicks on a repository showing detailed information on that repository. <br>
 
-Repository list is displayed using a `RecyclerView`. Each repository is displayed within a container called `CardView`. A `SearchView` is added to ActionBar. Using this widget, users can enter the GitHub username they want to query.<br>
+Repository list is displayed using a `RecyclerView`. Each repository is displayed within a container called `CardView`. A `SearchView` is added to ActionBar. Using this widget, users can enter the GitHub username they want to query.
+<br><br>
 
 <p align="center">
   <img align="center" src="https://github.com/barkinak/Repositories/blob/master/content/Repositories.gif" width="360" title="App GIF">
 </p>
 
+<br><br>
 Navigation is handled by creating a navigation graph. This implements best practices for navigation and keeps all screens in a single activity. It makes is easy to pass data between screens and simplifies animations. 
 
 ### ViewModel
