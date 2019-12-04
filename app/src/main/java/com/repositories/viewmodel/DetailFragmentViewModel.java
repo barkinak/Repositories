@@ -20,10 +20,6 @@ public class DetailFragmentViewModel extends AndroidViewModel {
     public MutableLiveData<Repository> mRepository = new MutableLiveData<>();
     private Executor executor = Executors.newSingleThreadExecutor();
 
-    /**
-     * Constructor
-     * @param application
-     */
     public DetailFragmentViewModel(@NonNull Application application) {
         super(application);
         mAppRepository = AppRepository.getInstance(getApplication());
@@ -35,7 +31,6 @@ public class DetailFragmentViewModel extends AndroidViewModel {
      */
     public void getRepositoryById(int id){
         executor.execute(() -> {
-            Log.d(TAG, "getRepositoryById: " + mAppRepository.getRepositoryById(id).getIsFavorite());
             mRepository.postValue(mAppRepository.getRepositoryById(id));
         });
     }
@@ -48,16 +43,8 @@ public class DetailFragmentViewModel extends AndroidViewModel {
      * @param b is favorite boolean
      */
     public void updateIsFavorite(int id, Boolean b){
-        Log.d(TAG, "updateIsFavorite: " + b);
-        Log.d(TAG, "mRepository : " + mRepository.getValue().getIsFavorite());
         mAppRepository.updateIsRepository(id, b);
         mRepository.getValue().setIsFavorite(b);
-
-        //getRepositoryById(id);
-    }
-
-    public void isFavorite(Repository repository){
-        executor.execute(() -> mAppRepository.getRepositoryById(repository.getId()).getIsFavorite());
     }
 
 }

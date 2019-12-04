@@ -34,10 +34,6 @@ import com.repositories.viewmodel.HomeActivityViewModel;
 
 import java.util.List;
 
-/**
- * RepoList will use RecyclerView
- */
-
 public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepoListener {
     private static final String TAG = "RepoListFragment";
 
