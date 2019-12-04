@@ -1,5 +1,5 @@
 # Repositories - Android Application
-***
+
 A Github Repository listing application is created using MVVM pattern. Android Jetpack's Architecture Components like `ViewModel`, `LiveData`, `Room` are used. Users can query GitHub to get the repositories of a certain user and add repositories to their favorites list. This application is created for an Android Interview Project where requirements can be found [here](https://github.com/barkinak/Repositories/blob/master/content/Android%20Developer%20Interview%20Project.pdf). It can be tested with the apk file [here](https://github.com/barkinak/Repositories/blob/master/content/app-debug.apk). The diagram below shows the recommended architecture between modules by Android.
 
 <img src="https://developer.android.com/topic/libraries/architecture/images/final-architecture.png" width="720" title="Architecture Diagram">
