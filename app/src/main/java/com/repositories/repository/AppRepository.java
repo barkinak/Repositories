@@ -60,16 +60,18 @@ public class AppRepository {
      * Gets repositories of the last queried user
      * @return
      */
-    public LiveData<List<Repository>> getRepositories(){
+
+    public List<Repository> getRepositories(){
         return mDb.repositoryDao().getAll();
     }
+
 
     /**
      * Gets repositories of queried user
      * @param query
      * @return
      */
-    public LiveData<List<Repository>> getRepositories(String query){
+    public List<Repository> getRepositories(String query){
         setRepositories(query);
         return mDb.repositoryDao().getAll();
     }

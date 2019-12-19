@@ -26,7 +26,7 @@ public interface RepositoryDao {
     Repository getRepositoryById(int id);
 
     @Query("SELECT * FROM repositories ORDER BY id DESC")
-    LiveData<List<Repository>> getAll();
+    List<Repository> getAll();
 
     @Query("SELECT * FROM repositories ORDER BY id DESC")
     List<Repository> getAllTest();

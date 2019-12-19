@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -86,7 +87,7 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
                 mRepoListAdapter.notifyDataSetChanged();
             }
         };
-        mHomeActivityViewModel.mRepositories.observe(this, reposObserver);
+        //mHomeActivityViewModel.mRepositories.observe(this, reposObserver);
     }
 
     private void initRecyclerView() {
@@ -132,7 +133,7 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case R.id.search:
                 return true;
@@ -144,6 +145,7 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     }
 
     public void onRepoClick(int position){
+        Log.d(TAG, "--- onRepoClick: ");
         Bundle bundle = new Bundle();
         bundle.putInt("id", mRepoListAdapter.getRepoAtPosition(position).getId());
         bundle.putBoolean("is_favorite", mRepoListAdapter.getRepoAtPosition(position).getIsFavorite());
