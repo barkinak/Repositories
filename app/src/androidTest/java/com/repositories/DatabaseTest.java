@@ -3,9 +3,9 @@ package com.repositories;
 import android.content.Context;
 import android.util.Log;
 
-import com.repositories.db.AppDatabase;
+import com.repositories.repository.AppDatabase;
 import com.repositories.model.Repository;
-import com.repositories.db.RepositoryDao;
+import com.repositories.model.RepositoryDao;
 import com.repositories.utilities.SampleData;
 
 import org.junit.After;

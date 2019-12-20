@@ -87,7 +87,7 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
                 mRepoListAdapter.notifyDataSetChanged();
             }
         };
-        //mHomeActivityViewModel.mRepositories.observe(this, reposObserver);
+        mHomeActivityViewModel.mRepositories.observe(this, reposObserver);
     }
 
     private void initRecyclerView() {
@@ -120,7 +120,7 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mHomeActivityViewModel.deleteAllRepositories();
-                mHomeActivityViewModel.getRepositories(query);
+                mHomeActivityViewModel.getRepositoriesFromWebService(query);
                 return false;
             }
 

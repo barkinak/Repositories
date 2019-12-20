@@ -1,8 +1,10 @@
-package com.repositories.db;
+package com.repositories.repository;
 
 import android.content.Context;
 
+import com.repositories.db.DateConverter;
 import com.repositories.model.Repository;
+import com.repositories.model.RepositoryDao;
 
 import androidx.room.Database;
 import androidx.room.Room;

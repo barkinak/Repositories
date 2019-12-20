@@ -120,7 +120,9 @@ public class RepoDetailFragment extends Fragment {
 
         mToolbar = getActivity().findViewById(R.id.toolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setNavigationOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment).navigate(R.id.action_repoDetailFragment_to_repoListFragment));
+        mToolbar.setNavigationOnClickListener(v -> Navigation.findNavController(getActivity(),
+                R.id.my_nav_host_fragment)
+                .navigate(R.id.action_repoDetailFragment_to_repoListFragment));
     }
 
     @Override

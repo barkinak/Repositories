@@ -10,13 +10,13 @@ import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.net.URL;
 
-public class GetReposTask extends AsyncTask<Void, Void, String> {
-    private static final String TAG = "GetReposTask";
+public class GetReposAsyncTask extends AsyncTask<Void, Void, String> {
+    private static final String TAG = "GetReposAsyncTask";
 
     private String URL_str;
     private String githubUserID;
 
-    public GetReposTask(){}
+    public GetReposAsyncTask(){}
 
     public void setGithubUserID(String githubUserID) {
         this.githubUserID = githubUserID;

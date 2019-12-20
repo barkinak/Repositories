@@ -1,6 +1,5 @@
 package com.repositories.view.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +49,6 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
 
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "--- onClick: ");
             onRepoListener.onRepoClick(getAdapterPosition());
         }
     }

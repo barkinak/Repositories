@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.repositories.R;
 
-public class HomeActivity extends AppCompatActivity implements RepoDetailFragment.OnFragmentInteractionListener, TestInterface {
+public class HomeActivity extends AppCompatActivity implements RepoDetailFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,20 +17,9 @@ public class HomeActivity extends AppCompatActivity implements RepoDetailFragmen
 
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-
-        TestInterface t = new TestInterface() {
-            @Override
-            public void greet(String name) {
-
-            }
-        };
     }
 
     @Override
     public void onFragmentInteraction(Uri uri) {}
 
-    @Override
-    public void greet(String name) {
-
-    }
 }

@@ -22,7 +22,7 @@ Navigation is handled by creating a navigation graph. This implements best pract
 ### ViewModel
 Two ViewModels are created for each Fragment which are `ListFragmentViewModel` and `DetailFragmentViewModel`. They provide data for the UI. The data is being hold using the `LiveData` class which notifies observers about updates. For example, RepoDetailFragment observes DetailFragmentViewModel and gets notified when user goes to the repository details page as shown below. 
 
-```
+```java
 // DetailFragmentViewModel class
 public MutableLiveData<Repository> mRepository = new MutableLiveData<>();
 public void getRepositoryById(int id){
@@ -44,7 +44,7 @@ The `AppRepository` class is actually not part of Architecture components librar
 
 <br>
 
-```
+```java
   private AppRepository(Context context) {
       mDb = AppDatabase.getInstance(context);
   }
@@ -63,7 +63,7 @@ The `AppRepository` class is actually not part of Architecture components librar
 
 <br>
 
-```
+```java
 @Query("UPDATE repositories SET is_favorite =:b WHERE id = :id")
 int updateIsFavorite(int id, boolean b);
 ```

@@ -1,10 +1,7 @@
 package com.repositories.repository;
 
-import androidx.lifecycle.LiveData;
-
 import android.content.Context;
 
-import com.repositories.db.AppDatabase;
 import com.repositories.model.Repository;
 
 import org.json.JSONArray;
@@ -14,20 +11,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
-/**
- * Singleton pattern
- */
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 public class AppRepository {
-    private static final String TAG = "AppRepository";
-
     private static AppRepository instance;
     private AppDatabase mDb;
-    private Executor executor = Executors.newSingleThreadExecutor();
 
+    /**
+     * Singleton pattern
+     */
     private AppRepository(Context context) {
         mDb = AppDatabase.getInstance(context);
     }
@@ -39,56 +34,60 @@ public class AppRepository {
         return instance;
     }
 
-    public void updateIsRepository(int id, Boolean b){
-        executor.execute(() -> mDb.repositoryDao().updateIsFavorite(id, b));
+    /**
+     * Updates the is_favorite field of a repository in db
+     * @param id id of repository
+     * @param b boolean to indicate whether repository is favorite
+     */
+    public Completable updateIsFavoriteRepository(int id, Boolean b){
+        return mDb.repositoryDao().updateIsFavorite(id, b);
     }
 
-    public Repository getRepositoryById(int id){
+    /**
+     * Method to get a single repository from db
+     * @param id id of repository
+     * @return returns the repository matching the id
+     */
+    public Single<Repository> getRepositoryById(int id){
         return mDb.repositoryDao().getRepositoryById(id);
     }
 
-    public void setRepositories(String query){
-        List<Repository> repositories = getReposFromGithub(query);
-        executor.execute(() -> mDb.repositoryDao().insertAll(repositories));
-    }
-
-    public void deleteRepositories(){
-        executor.execute(() -> mDb.repositoryDao().deleteAll());
+    //----------------------------------------------------------------------------------------------
+    /**
+     * Method to delete all repositories in db
+     */
+    public Completable deleteRepositories(){
+        return mDb.repositoryDao().deleteAll();
     }
 
     /**
-     * Gets repositories of the last queried user
-     * @return
+     * Get all repositories in db
+     * @return list of repositories in db
      */
-
-    public List<Repository> getRepositories(){
-        return mDb.repositoryDao().getAll();
-    }
-
-
-    /**
-     * Gets repositories of queried user
-     * @param query
-     * @return
-     */
-    public List<Repository> getRepositories(String query){
-        setRepositories(query);
+    public Flowable<List<Repository>> getRepositories(){
         return mDb.repositoryDao().getAll();
     }
 
     /**
-     * Method that starts an AsyncTask to get repositories of queried user from GitHub
+     * Starts an AsynchTask to query GitHub and inserts results to db
+     * @param query ID of GitHub user
+     */
+    public Completable startRepositoryRequest(String query){
+        return mDb.repositoryDao().insertAll(getReposFromGithub(query));
+    }
+
+    /**
+     * AsyncTask method to get repositories of queried user from GitHub
      * @param username ID of GitHub user
      * @return List of repositories of a GitHub user
      */
-    public List<Repository> getReposFromGithub(String username){
+    private List<Repository> getReposFromGithub(String username){
         List<Repository> repositories = new ArrayList<>();
-        GetReposTask task = new GetReposTask();
+        GetReposAsyncTask task = new GetReposAsyncTask();
         task.setGithubUserID(username);
         task.execute();
         try {
-            String result = task.get();
-            repositories = parseJSON(result);
+            repositories = parseJSON(task.get());
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -102,7 +101,7 @@ public class AppRepository {
      * @param output JSON String returned from GitHub
      * @return array of parsed repositories
      */
-    public ArrayList<Repository> parseJSON(String output){
+    private ArrayList<Repository> parseJSON(String output){
         ArrayList<Repository> repositories = new ArrayList<>();
         try {
             JSONObject repository, owner;

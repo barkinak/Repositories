@@ -3,6 +3,10 @@ package com.repositories.viewmodel;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 import android.app.Application;
 import android.util.Log;
@@ -10,15 +14,12 @@ import android.util.Log;
 import com.repositories.model.Repository;
 import com.repositories.repository.AppRepository;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
 public class DetailFragmentViewModel extends AndroidViewModel {
-    private static final String TAG = "HomeActivityViewModel";
+    private static final String TAG = "DetailFragmentViewModel";
 
     private AppRepository mAppRepository;
+    private CompositeDisposable mDisposable = new CompositeDisposable();
     public MutableLiveData<Repository> mRepository = new MutableLiveData<>();
-    private Executor executor = Executors.newSingleThreadExecutor();
 
     public DetailFragmentViewModel(@NonNull Application application) {
         super(application);
@@ -30,9 +31,20 @@ public class DetailFragmentViewModel extends AndroidViewModel {
      * @param id id of repository
      */
     public void getRepositoryById(int id){
-        executor.execute(() -> {
-            mRepository.postValue(mAppRepository.getRepositoryById(id));
-        });
+        mDisposable.add(mAppRepository.getRepositoryById(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<Repository>() {
+                    @Override
+                    public void onSuccess(Repository repository) {
+                        mRepository.postValue(repository);
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        error.printStackTrace();
+                    }
+                }));
     }
 
     /**
@@ -43,8 +55,16 @@ public class DetailFragmentViewModel extends AndroidViewModel {
      * @param b is favorite boolean
      */
     public void updateIsFavorite(int id, Boolean b){
-        mAppRepository.updateIsRepository(id, b);
-        mRepository.getValue().setIsFavorite(b);
+        mDisposable.add(mAppRepository.updateIsFavoriteRepository(id, b)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> Log.d(TAG, "Successfully updated repository"),
+                        throwable -> Log.e(TAG, "Unable to update repositories", throwable)));
     }
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        mDisposable.clear();
+    }
 }
