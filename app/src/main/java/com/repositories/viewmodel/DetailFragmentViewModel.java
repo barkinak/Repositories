@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers;
 import android.app.Application;
 import android.util.Log;
 
-import com.repositories.model.Repository;
+import com.repositories.repository.model.Repository;
 import com.repositories.repository.AppRepository;
 
 public class DetailFragmentViewModel extends AndroidViewModel {
@@ -37,6 +37,7 @@ public class DetailFragmentViewModel extends AndroidViewModel {
                 .subscribeWith(new DisposableSingleObserver<Repository>() {
                     @Override
                     public void onSuccess(Repository repository) {
+                        Log.d(TAG, "onSuccess: repository ");
                         mRepository.postValue(repository);
                     }
 

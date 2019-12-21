@@ -2,7 +2,8 @@ package com.repositories.repository;
 
 import android.content.Context;
 
-import com.repositories.model.Repository;
+import com.repositories.repository.model.Repository;
+import com.repositories.repository.remote.RetrofitInstance;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +16,9 @@ import java.util.concurrent.ExecutionException;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppRepository {
     private static AppRepository instance;
@@ -35,7 +39,7 @@ public class AppRepository {
     }
 
     /**
-     * Updates the is_favorite field of a repository in db
+     * Update the is_favorite field of a repository in db
      * @param id id of repository
      * @param b boolean to indicate whether repository is favorite
      */
@@ -44,7 +48,7 @@ public class AppRepository {
     }
 
     /**
-     * Method to get a single repository from db
+     * Get a single repository from db
      * @param id id of repository
      * @return returns the repository matching the id
      */
@@ -54,7 +58,7 @@ public class AppRepository {
 
     //----------------------------------------------------------------------------------------------
     /**
-     * Method to delete all repositories in db
+     * Delete all repositories in db
      */
     public Completable deleteRepositories(){
         return mDb.repositoryDao().deleteAll();
@@ -62,72 +66,19 @@ public class AppRepository {
 
     /**
      * Get all repositories in db
-     * @return list of repositories in db
+     * @return list of repositories
      */
     public Flowable<List<Repository>> getRepositories(){
         return mDb.repositoryDao().getAll();
     }
 
     /**
-     * Starts an AsynchTask to query GitHub and inserts results to db
-     * @param query ID of GitHub user
+     * Insert repositories to db
+     * @param repositories list of repositories
+     * @return Completable object
      */
-    public Completable startRepositoryRequest(String query){
-        return mDb.repositoryDao().insertAll(getReposFromGithub(query));
-    }
-
-    /**
-     * AsyncTask method to get repositories of queried user from GitHub
-     * @param username ID of GitHub user
-     * @return List of repositories of a GitHub user
-     */
-    private List<Repository> getReposFromGithub(String username){
-        List<Repository> repositories = new ArrayList<>();
-        GetReposAsyncTask task = new GetReposAsyncTask();
-        task.setGithubUserID(username);
-        task.execute();
-        try {
-            repositories = parseJSON(task.get());
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return repositories;
-    }
-
-    /**
-     * Parsing JSON Object returned from server
-     * @param output JSON String returned from GitHub
-     * @return array of parsed repositories
-     */
-    private ArrayList<Repository> parseJSON(String output){
-        ArrayList<Repository> repositories = new ArrayList<>();
-        try {
-            JSONObject repository, owner;
-            JSONArray jsonArray = new JSONArray(output);
-            for(int i=0; i<jsonArray.length(); i++){
-                repository = jsonArray.getJSONObject(i);
-                int id               = repository.getInt("id");
-                String name          = repository.getString("name");
-                String description   = repository.getString("description");
-                int stargazers_count = repository.getInt("stargazers_count");
-                int watchers_count   = repository.getInt("watchers_count");
-                String language      = repository.getString("language");
-
-                owner = repository.getJSONObject("owner");
-                String avatar_url    = owner.getString("avatar_url");
-                String user_id       = owner.getString("login");
-
-                Repository r = new Repository(id, name, description, stargazers_count, watchers_count, language);
-                r.setAvatarUrl(avatar_url);
-                r.setUserId(user_id);
-                repositories.add(r);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return repositories;
+    public Completable insertReposToDB(List<Repository> repositories){
+        return mDb.repositoryDao().insertAll(repositories);
     }
 
 }

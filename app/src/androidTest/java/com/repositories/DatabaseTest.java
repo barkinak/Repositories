@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.repositories.repository.AppDatabase;
-import com.repositories.model.Repository;
-import com.repositories.model.RepositoryDao;
+import com.repositories.repository.model.Repository;
+import com.repositories.repository.model.RepositoryDao;
 import com.repositories.utilities.SampleData;
 
 import org.junit.After;
@@ -51,7 +51,7 @@ public class DatabaseTest {
     public void compareStrings() {
         mDao.insertAll(SampleData.getRepositories());
         Repository original = SampleData.getRepositories().get(0);
-        Repository fromDb = mDao.getRepositoryById(1);
+        Repository fromDb = mDao.getRepositoryByIdTest(1);
         assertEquals(original.getDescription(), fromDb.getDescription());
         assertEquals(1, fromDb.getId());
     }

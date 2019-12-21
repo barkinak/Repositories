@@ -29,7 +29,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.repositories.R;
-import com.repositories.model.Repository;
+import com.repositories.repository.model.Repository;
 import com.repositories.view.adapter.RepoListAdapter;
 import com.repositories.viewmodel.HomeActivityViewModel;
 
@@ -148,6 +148,7 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
         Log.d(TAG, "--- onRepoClick: ");
         Bundle bundle = new Bundle();
         bundle.putInt("id", mRepoListAdapter.getRepoAtPosition(position).getId());
+        Log.d(TAG, "onRepoClick: mRepoListAdapter.getRepoAtPosition(position).getId() " + mRepoListAdapter.getRepoAtPosition(position).getId());
         bundle.putBoolean("is_favorite", mRepoListAdapter.getRepoAtPosition(position).getIsFavorite());
         Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment).navigate(R.id.action_repoListFragment_to_repoDetailFragment, bundle);
     }

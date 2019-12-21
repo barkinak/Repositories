@@ -1,6 +1,6 @@
 package com.repositories.utilities;
 
-import com.repositories.model.Repository;
+import com.repositories.repository.model.Repository;
 
 import java.util.ArrayList;
 import java.util.List;

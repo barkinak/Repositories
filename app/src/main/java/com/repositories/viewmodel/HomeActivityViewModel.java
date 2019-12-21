@@ -7,8 +7,9 @@ import androidx.lifecycle.MutableLiveData;
 import android.app.Application;
 import android.util.Log;
 
-import com.repositories.model.Repository;
+import com.repositories.repository.model.Repository;
 import com.repositories.repository.AppRepository;
+import com.repositories.repository.remote.RetrofitInstance;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -41,7 +42,17 @@ public class HomeActivityViewModel extends AndroidViewModel {
      * @param query ID of GitHub user
      */
     public void getRepositoriesFromWebService(String query){
-        mDisposable.add(mAppRepository.startRepositoryRequest(query)
+        mDisposable.add(RetrofitInstance.getService().listRepos(query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                    Log.d(TAG, "HomeActivityViewModel: result: " + result);
+                    insertReposToDB(result);
+                }));
+    }
+
+    public void insertReposToDB(List<Repository> repositories){
+        mDisposable.add(mAppRepository.insertReposToDB(repositories)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> Log.d(TAG, "Successfully acquired repositories"),

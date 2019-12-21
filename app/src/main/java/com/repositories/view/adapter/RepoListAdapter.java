@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.repositories.R;
-import com.repositories.model.Repository;
+import com.repositories.repository.model.Repository;
 
 import java.util.List;
 

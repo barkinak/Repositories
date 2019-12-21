@@ -1,4 +1,7 @@
-package com.repositories.model;
+package com.repositories.repository.model;
+
+import org.json.JSONObject;
+import com.repositories.repository.model.Owner;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -14,6 +17,7 @@ public class Repository {
     public int id;
     public int repo_id;
     public String name;
+    //public Owner owner;
     public String description;
     public int stargazers_count;
     public int watchers_count;
@@ -79,13 +83,15 @@ public class Repository {
         return user_id;
     }
 
+    /*
     public void setAvatarUrl(String avatar_url) {
-        this.avatar_url = avatar_url;
+        this.avatar_url = this.owner.getAvatarUrl();
     }
 
     public void setUserId(String user_id) {
-        this.user_id = user_id;
+        this.user_id = this.owner.getLogin();
     }
+    */
 
     public Boolean getIsFavorite() {
         return is_favorite;
