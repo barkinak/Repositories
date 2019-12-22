@@ -32,7 +32,6 @@ public class HomeActivityViewModel extends AndroidViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
-                    Log.d(TAG, "HomeActivityViewModel: result: " + result);
                     mRepositories.postValue(result);
                 }));
     }
@@ -45,10 +44,7 @@ public class HomeActivityViewModel extends AndroidViewModel {
         mDisposable.add(RetrofitInstance.getService().listRepos(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    Log.d(TAG, "HomeActivityViewModel: result: " + result);
-                    insertReposToDB(result);
-                }));
+                .subscribe(this::insertReposToDB));
     }
 
     public void insertReposToDB(List<Repository> repositories){

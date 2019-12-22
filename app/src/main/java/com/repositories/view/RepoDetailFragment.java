@@ -138,14 +138,14 @@ public class RepoDetailFragment extends Fragment {
                 mRepository = repository;
 
                 // Set repository name, description and owner
-                mOwner.setText(repository.getUserId());
+                mOwner.setText(repository.getOwner().getLogin());
                 mName.setText(repository.getName());
                 mDescription.setText(repository.getDescription());
                 mStargazersCount.setText(Integer.toString(repository.getStargazersCount()));
                 mWatchersCount.setText(Integer.toString(repository.getWatchersCount()));
 
                 // Set avatar picture
-                Picasso.with(getActivity()).load(repository.getAvatarUrl()).into(mAvatar);
+                Picasso.with(getActivity()).load(repository.getOwner().getAvatarUrl()).into(mAvatar);
 
                 mToolbar.setTitle(repository.getName());
             }

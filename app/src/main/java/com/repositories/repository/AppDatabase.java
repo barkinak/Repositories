@@ -2,6 +2,7 @@ package com.repositories.repository;
 
 import android.content.Context;
 
+import com.repositories.repository.model.Converters;
 import com.repositories.repository.model.Repository;
 import com.repositories.repository.model.RepositoryDao;
 
@@ -11,6 +12,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 @Database(entities = {Repository.class}, version = 1, exportSchema = false)
+@TypeConverters(Converters.class)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "AppDatabase.db";
     private static volatile AppDatabase instance;

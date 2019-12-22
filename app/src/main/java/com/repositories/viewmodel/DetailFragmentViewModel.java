@@ -37,7 +37,6 @@ public class DetailFragmentViewModel extends AndroidViewModel {
                 .subscribeWith(new DisposableSingleObserver<Repository>() {
                     @Override
                     public void onSuccess(Repository repository) {
-                        Log.d(TAG, "onSuccess: repository ");
                         mRepository.postValue(repository);
                     }
 

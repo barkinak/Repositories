@@ -17,13 +17,12 @@ public class Repository {
     public int id;
     public int repo_id;
     public String name;
-    //public Owner owner;
     public String description;
     public int stargazers_count;
     public int watchers_count;
     public String language;
-    public String avatar_url;
-    public String user_id;
+    public Owner owner;
+    //----------------------------------------------------------------------------------------------
     public Boolean is_favorite = false;
 
     @Ignore
@@ -53,10 +52,6 @@ public class Repository {
         return id;
     }
 
-    public int getRepoId() {
-        return repo_id;
-    }
-
     public String getName() {
         return name;
     }
@@ -75,30 +70,12 @@ public class Repository {
 
     public String getLanguage() { return language; }
 
-    public String getAvatarUrl() {
-        return avatar_url;
-    }
-
-    public String getUserId() {
-        return user_id;
-    }
-
-    /*
-    public void setAvatarUrl(String avatar_url) {
-        this.avatar_url = this.owner.getAvatarUrl();
-    }
-
-    public void setUserId(String user_id) {
-        this.user_id = this.owner.getLogin();
-    }
-    */
-
     public Boolean getIsFavorite() {
         return is_favorite;
     }
 
-    public void setIsFavorite(Boolean is_favorite) {
-        this.is_favorite = is_favorite;
+    public Owner getOwner() {
+        return owner;
     }
 
     @Override
