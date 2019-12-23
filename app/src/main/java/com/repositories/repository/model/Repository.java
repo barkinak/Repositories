@@ -1,8 +1,5 @@
 package com.repositories.repository.model;
 
-import org.json.JSONObject;
-import com.repositories.repository.model.Owner;
-
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;

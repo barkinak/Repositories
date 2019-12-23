@@ -34,9 +34,9 @@ public class SampleData {
 
     public static List<Repository> getRepositories() {
         List<Repository> repositories = new ArrayList<>();
-        //repositories.add(new Repository(1, SAMPLE_NAME_1, SAMPLE_DESCRIPTION_1, SAMPLE_STARGAZERS_COUNT_1, SAMPLE_WATCHERS_COUNT_1, SAMPLE_LANGUAGE_1));
-        //repositories.add(new Repository(2, SAMPLE_NAME_2, SAMPLE_DESCRIPTION_2, SAMPLE_STARGAZERS_COUNT_2, SAMPLE_WATCHERS_COUNT_2, SAMPLE_LANGUAGE_2));
-        //repositories.add(new Repository(3, SAMPLE_NAME_3, SAMPLE_DESCRIPTION_3, SAMPLE_STARGAZERS_COUNT_3, SAMPLE_WATCHERS_COUNT_3, SAMPLE_LANGUAGE_3));
+        repositories.add(new Repository(1, SAMPLE_NAME_1, SAMPLE_DESCRIPTION_1, SAMPLE_STARGAZERS_COUNT_1, SAMPLE_WATCHERS_COUNT_1, SAMPLE_LANGUAGE_1));
+        repositories.add(new Repository(2, SAMPLE_NAME_2, SAMPLE_DESCRIPTION_2, SAMPLE_STARGAZERS_COUNT_2, SAMPLE_WATCHERS_COUNT_2, SAMPLE_LANGUAGE_2));
+        repositories.add(new Repository(3, SAMPLE_NAME_3, SAMPLE_DESCRIPTION_3, SAMPLE_STARGAZERS_COUNT_3, SAMPLE_WATCHERS_COUNT_3, SAMPLE_LANGUAGE_3));
         return repositories;
     }
 }

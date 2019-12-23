@@ -3,22 +3,12 @@ package com.repositories.repository;
 import android.content.Context;
 
 import com.repositories.repository.model.Repository;
-import com.repositories.repository.remote.RetrofitInstance;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppRepository {
     private static AppRepository instance;
@@ -38,6 +28,9 @@ public class AppRepository {
         return instance;
     }
 
+    //----------------------------------------------------------------------------------------------
+    // DetailFragmentViewModel
+    //----------------------------------------------------------------------------------------------
     /**
      * Update the is_favorite field of a repository in db
      * @param id id of repository
@@ -56,6 +49,8 @@ public class AppRepository {
         return mDb.repositoryDao().getRepositoryById(id);
     }
 
+    //----------------------------------------------------------------------------------------------
+    // ListFragmentViewModel
     //----------------------------------------------------------------------------------------------
     /**
      * Delete all repositories in db

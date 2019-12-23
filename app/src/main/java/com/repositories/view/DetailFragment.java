@@ -32,13 +32,13 @@ import com.squareup.picasso.Picasso;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RepoDetailFragment.OnFragmentInteractionListener} interface
+ * {@link DetailFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link RepoDetailFragment#newInstance} factory method to
+ * Use the {@link DetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RepoDetailFragment extends Fragment {
-    private static final String TAG = "RepoDetailFragment";
+public class DetailFragment extends Fragment {
+    private static final String TAG = "DetailFragment";
 
     @BindView(R.id.owner)
     TextView mOwner;
@@ -71,7 +71,7 @@ public class RepoDetailFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public RepoDetailFragment() {
+    public DetailFragment() {
         // Required empty public constructor
     }
 
@@ -80,11 +80,11 @@ public class RepoDetailFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @return A new instance of fragment RepoDetailFragment.
+     * @return A new instance of fragment DetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RepoDetailFragment newInstance(int param1, boolean param2) {
-        RepoDetailFragment fragment = new RepoDetailFragment();
+    public static DetailFragment newInstance(int param1, boolean param2) {
+        DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, param1);
         args.putBoolean(ARG_PARAM2, param2);

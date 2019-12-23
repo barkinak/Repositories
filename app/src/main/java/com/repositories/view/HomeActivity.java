@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.repositories.R;
 
-public class HomeActivity extends AppCompatActivity implements RepoDetailFragment.OnFragmentInteractionListener {
+public class HomeActivity extends AppCompatActivity implements DetailFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

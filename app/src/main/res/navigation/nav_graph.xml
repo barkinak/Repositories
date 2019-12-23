@@ -7,7 +7,7 @@
     app:startDestination="@id/repoListFragment">
     <fragment
         android:id="@+id/repoListFragment"
-        android:name="com.repositories.view.RepoListFragment"
+        android:name="com.repositories.view.ListFragment"
         android:label="repo_list_fragment"
         tools:layout="@layout/fragment_repo_list" >
         <action
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/repoDetailFragment"
-        android:name="com.repositories.view.RepoDetailFragment"
+        android:name="com.repositories.view.DetailFragment"
         android:label="fragment_repo_detail"
         tools:layout="@layout/fragment_repo_detail" >
         <action

@@ -17,14 +17,14 @@ import io.reactivex.schedulers.Schedulers;
 
 import java.util.List;
 
-public class HomeActivityViewModel extends AndroidViewModel {
-    private static final String TAG = "HomeActivityViewModel";
+public class ListFragmentViewModel extends AndroidViewModel {
+    private static final String TAG = "ListFragmentViewModel";
 
     private AppRepository mAppRepository;
     private CompositeDisposable mDisposable = new CompositeDisposable();
     public MutableLiveData<List<Repository>> mRepositories = new MutableLiveData<>();
 
-    public HomeActivityViewModel(@NonNull Application application) {
+    public ListFragmentViewModel(@NonNull Application application) {
         super(application);
         mAppRepository = AppRepository.getInstance(getApplication());
 
@@ -44,9 +44,13 @@ public class HomeActivityViewModel extends AndroidViewModel {
         mDisposable.add(RetrofitInstance.getService().listRepos(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::insertReposToDB));
+                .subscribe(repositories -> insertReposToDB(repositories)));
     }
 
+    /**
+     * Insert repositories to db
+     * @param repositories list of repositories
+     */
     public void insertReposToDB(List<Repository> repositories){
         mDisposable.add(mAppRepository.insertReposToDB(repositories)
                 .subscribeOn(Schedulers.io())

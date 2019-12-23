@@ -30,17 +30,17 @@ import android.widget.EditText;
 
 import com.repositories.R;
 import com.repositories.repository.model.Repository;
-import com.repositories.view.adapter.RepoListAdapter;
-import com.repositories.viewmodel.HomeActivityViewModel;
+import com.repositories.view.adapter.ListAdapter;
+import com.repositories.viewmodel.ListFragmentViewModel;
 
 import java.util.List;
 
-public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepoListener {
-    private static final String TAG = "RepoListFragment";
+public class ListFragment extends Fragment implements ListAdapter.OnRepoListener {
+    private static final String TAG = "ListFragment";
 
-    private HomeActivityViewModel mHomeActivityViewModel;
-    private RepoListAdapter mRepoListAdapter;
-    private RepoListAdapter.OnRepoListener mRepoListener = this;
+    private ListFragmentViewModel mHomeActivityViewModel;
+    private ListAdapter mRepoListAdapter;
+    private ListAdapter.OnRepoListener mRepoListener = this;
 
     @BindView(R.id.recyclerView)
     protected RecyclerView mRecyclerView;
@@ -75,11 +75,11 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     }
 
     private void initViewModel() {
-        mHomeActivityViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
+        mHomeActivityViewModel = ViewModelProviders.of(this).get(ListFragmentViewModel.class);
 
         final Observer<List<Repository>> reposObserver = repositories -> {
             if(mRepoListAdapter == null){
-                mRepoListAdapter = new RepoListAdapter(mRepoListener);
+                mRepoListAdapter = new ListAdapter(mRepoListener);
                 mRepoListAdapter.setRepos(repositories);
                 mRecyclerView.setAdapter(mRepoListAdapter);
             } else {
@@ -145,10 +145,8 @@ public class RepoListFragment extends Fragment implements RepoListAdapter.OnRepo
     }
 
     public void onRepoClick(int position){
-        Log.d(TAG, "--- onRepoClick: ");
         Bundle bundle = new Bundle();
         bundle.putInt("id", mRepoListAdapter.getRepoAtPosition(position).getId());
-        Log.d(TAG, "onRepoClick: mRepoListAdapter.getRepoAtPosition(position).getId() " + mRepoListAdapter.getRepoAtPosition(position).getId());
         bundle.putBoolean("is_favorite", mRepoListAdapter.getRepoAtPosition(position).getIsFavorite());
         Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment).navigate(R.id.action_repoListFragment_to_repoDetailFragment, bundle);
     }

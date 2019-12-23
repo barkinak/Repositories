@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyViewHolder> {
-    private static final String TAG = "RepoListAdapter";
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
+    private static final String TAG = "ListAdapter";
     private List<Repository> mRepos;
     private OnRepoListener mOnRepoListener;
 
@@ -57,7 +57,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
         void onRepoClick (int position);
     }
 
-    public RepoListAdapter(OnRepoListener onRepoListener){
+    public ListAdapter(OnRepoListener onRepoListener){
         mOnRepoListener = onRepoListener;
     }
 
@@ -72,7 +72,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.MyView
 
     // Create new views
     @Override
-    public RepoListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.repo_layout, parent, false);
         return new MyViewHolder(view, mOnRepoListener);
     }
